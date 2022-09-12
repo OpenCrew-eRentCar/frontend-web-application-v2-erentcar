@@ -3,14 +3,14 @@ import UserRegister from "../Models/UserRegister.model";
 import http from "./http-common";
 
 class AuthService {
-  private baseUrl = "users/auth";
+  private BASE_URL = "users/auth";
 
   login(data: UserLogin) {
-    return http.post(this.baseUrl + "/login", data);
+    return http.post(this.BASE_URL + "/sign-in", data);
   }
 
   register(data: UserRegister) {
-    return http.post(this.baseUrl + "/register", data);
+    return http.post(this.BASE_URL + "/sign-up", data);
   }
 }
 
