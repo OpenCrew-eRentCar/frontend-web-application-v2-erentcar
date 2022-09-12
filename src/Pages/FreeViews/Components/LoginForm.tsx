@@ -4,6 +4,7 @@ import { ProgressSpinner } from "primereact/progressspinner";
 import { Toast } from "primereact/toast";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthService from "../../../Services/Auth.service";
 import ClientService from "../../../Services/Client.service";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -36,6 +37,7 @@ export const LoginForm = (props: LoginFormProps) => {
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
+  const navigate = useNavigate();
 
   const showToastLoginSucess = () => {
     toastLogin.current?.show({
@@ -73,6 +75,7 @@ export const LoginForm = (props: LoginFormProps) => {
       .then(async (response) => {
         localStorage.setItem("TOKEN", response.data.resource.token);
         await getClientInfo();
+        navigate("/auth");
       })
       .catch((error) => {
         showToastLoginError();
