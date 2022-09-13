@@ -11,6 +11,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  height: 100vh;
+  min-height: 100vh;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -30,5 +35,38 @@ code {
 
   .color-primary {
     color: #30A8F2 !important;
+  }
+
+  .navigation-menu {
+    @apply !rounded-none !border !border-t-0 !left-[-200px] md:!left-0 !absolute !h-full;
+    z-index: 1000;
+  }
+}
+
+.p-menubar-button {
+  display: none !important;
+}
+
+.p-menubar-end {
+  display: flex;
+  width: 100%;
+}
+
+.navigation-menu,
+.auth-content {
+  transition: all 0.5s !important;
+}
+
+.auth-content {
+  margin-left: 200px;
+}
+
+@media (max-width: 768px) {
+  .navigation-menu.active {
+    left: 0 !important;
+  }
+
+  .auth-content {
+    margin-left: 0;
   }
 }
