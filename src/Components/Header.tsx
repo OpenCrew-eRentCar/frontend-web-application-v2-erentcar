@@ -28,7 +28,7 @@ export const Header = (props: HeaderProps) => {
   ) : (
     <Button
       label="Iniciar sesión"
-      className="btn-primary"
+      className="!ml-auto btn-primary"
       onClick={props.onClickLoginButton}
     />
   );
