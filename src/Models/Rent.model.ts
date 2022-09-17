@@ -1,11 +1,11 @@
-import { Car } from "./Car.model";
+import CarEntity from "./Car.model";
 
-export interface Rent {
+export default interface Rent {
   id: number;
   clientId: number;
   amount: number;
   startDate: Date;
   finishDate: Date;
   rate: number;
-  car: Car;
+  car: CarEntity;
 }

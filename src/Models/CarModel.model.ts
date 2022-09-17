@@ -1,6 +1,6 @@
-import { CarBrand } from "./CarBrand.model";
+import CarBrand from "./CarBrand.model";
 
-export interface CarModel {
+export default interface CarModel {
   id: number;
   carBrand: CarBrand;
   imagePath: string;

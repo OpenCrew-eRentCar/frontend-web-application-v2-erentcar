@@ -1,6 +1,6 @@
-import { Car } from "./Car.model";
-import { Favourite } from "./Favourite.model";
-import { Rent } from "./Rent.model";
+import CarEntity from "./Car.model";
+import Favourite from "./Favourite.model";
+import Rent from "./Rent.model";
 
 export default interface User {
   id: number;
@@ -14,7 +14,7 @@ export default interface User {
   responseTime: number;
   planId: number;
   userId: number;
-  cars: Car[];
+  cars: CarEntity[];
   favourites: Favourite[];
   rents: Rent[];
 }

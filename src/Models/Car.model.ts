@@ -1,8 +1,8 @@
+import CarModel from "./CarModel.model";
 import { CarCategory } from "./CarCategory.enum";
-import { CarModel } from "./CarModel.model";
 import { MechanicConditions } from "./MechanicConditions.enum";
 
-export interface Car {
+export default interface CarEntity {
   id: number;
   active: boolean;
   address: string;
