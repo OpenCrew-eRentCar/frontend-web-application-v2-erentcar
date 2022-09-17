@@ -15,7 +15,7 @@ export const Authviews = () => {
             authenticated={true}
             onClickMenuButton={() => setShowMenu(!showMenu)}
           />
-          <div className="flex h-full relative">
+          <div className="flex h-full relative mt-[68px]">
             <SidebarMenu showMenu={showMenu} />
             <div
               className={

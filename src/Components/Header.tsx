@@ -19,7 +19,7 @@ export const Header = (props: HeaderProps) => {
     <div className="flex w-full">
       <Button
         icon="pi pi-bars"
-        className="p-button-text color-primary md:!hidden"
+        className="p-button-text color-primary lg:!hidden"
         onClick={props.onClickMenuButton}
       />
       <Button icon="pi pi-heart-fill" className="!ml-auto !mr-3 btn-primary" />
@@ -33,7 +33,7 @@ export const Header = (props: HeaderProps) => {
     />
   );
 
-  return <Menubar start={start} end={end} />;
+  return <Menubar start={start} end={end} className="!fixed w-full !z-[1000]"/>;
 };
 
 export default Header;

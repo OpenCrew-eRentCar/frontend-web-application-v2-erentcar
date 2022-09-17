@@ -60,7 +60,7 @@ export const SidebarMenu = (props: SidebarMenuProps) => {
   return (
     <Menu
       model={items}
-      className={"navigation-menu " + (props.showMenu ? "active " : "")}
+      className={"navigation-menu !fixed " + (props.showMenu ? "active " : "")}
     />
   );
 };
