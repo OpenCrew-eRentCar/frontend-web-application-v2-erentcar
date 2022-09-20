@@ -26,7 +26,7 @@ export const Cars = (props: CarsProps) => {
   }, [props.filters]);
 
   return (
-    <div className="w-full mx-auto lg:ml-5 max-w-[600px]">
+    <div className="w-full mx-auto lg:ml-5 max-w-[600px] px-3 lg:p-0 border-box lg:border-content">
       {cars.map((car) => (
         <Car key={car.id} car={car} />
       ))}

@@ -2,7 +2,6 @@ import "primeicons/primeicons.css";
 import { Button } from "primereact/button";
 import CarEntity from "../../../../Models/Car.model";
 
-const car = require("../../../../Assets/car.png");
 const gearBoxIcon = require("../../../../Assets/gearbox.png");
 
 interface CarProps {
@@ -11,15 +10,15 @@ interface CarProps {
 
 export const Car = (props: CarProps) => {
   return (
-    <div className="flex w-full w-[600px] h-[300px] mb-5 bg-[#F3F1F1] rounded-lg">
-      <div className="w-[220px] h-full bg-primary rounded-l-lg flex relative">
+    <div className="grid grid-cols-2 gird-rows-2 lg:flex w-full lg:w-[600px] lg:h-[300px] mb-5 bg-[#F3F1F1] rounded-lg">
+      <div className="col-span-1 lg:w-[220px] h-full bg-primary rounded-l-lg flex relative">
         <img alt="car" src={props.car.imagePath} className="my-auto" />
         <Button
           icon="pi pi-heart "
-          className="!absolute !right-0 text-center p-button-rounded p-button-text !text-black !w-[50px] hover:!bg-cyan-100"
+          className="!absolute !right-0 text-center p-button-rounded p-button-text !text-black !w-[50px] !bg-[#CEE4FF] hover:!bg-cyan-100"
         />
       </div>
-      <div className="w-[240px] box-border p-3 text-sm">
+      <div className="col-span-1 lg:w-[240px] box-border p-3 text-sm">
         <div className="border-b-2 border-[#C4C4C4]">
           <h1 className="font-bold text-xl">
             {props.car.carModel.carBrand.name} {props.car.carModel.name}
@@ -48,17 +47,19 @@ export const Car = (props: CarProps) => {
             <li>Seguro contra accidentes</li>
             <li>Seguro contra robos</li>
           </ul>
-          <ul className="!list-disc pl-5  text-sm">
+          <ul className="!list-disc pl-5 text-sm">
             <li>Limpieza profunda</li>
           </ul>
         </div>
       </div>
-      <div className="flex flex-col w-[140px] h-full border-l-2 border-[#C4C4C4] box-border p-3">
-        <p className="text-xl font-bold mt-auto">S/ {props.car.rentAmountDay}</p>
-        <p className="my-2">Por día</p>
+      <div className="col-span-2 flex lg:flex-col lg:w-[140px] h-full border-t-2 lg:border-t-0 lg:border-l-2 border-[#C4C4C4] box-border p-3 col-span-2">
+        <p className="text-xl font-bold my-auto ml-auto lg:ml-0 lg:my-0 lg:mt-auto">
+          S/ {props.car.rentAmountDay}
+        </p>
+        <p className="my-auto ml-2 lg:ml-0 lg:my-2">Por día</p>
         <Button
           label="Ver oferta"
-          className="w-full mt-5 !text-sm btn-primary"
+          className="lg:w-full !ml-5 lg:!ml-0 !text-sm btn-primary"
         />
       </div>
     </div>
