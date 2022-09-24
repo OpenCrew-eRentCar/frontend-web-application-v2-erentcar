@@ -74,6 +74,13 @@ code {
   border-color: #30A8F2 !important;
 }
 
+.cars{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 @media (max-width: 1024px) {
   .navigation-menu.active {
     left: 0 !important;
