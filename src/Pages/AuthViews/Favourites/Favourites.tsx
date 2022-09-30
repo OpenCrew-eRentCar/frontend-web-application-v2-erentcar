@@ -1,42 +1,59 @@
-import FavoriteCard from "../../../Components/FavoriteCard";
+import FavoriteCard from "./Components/FavoriteCard";
 import Favourite from "../../../Models/Favourite.model";
 import FavoritesService from "../../../Services/Favorites.service";
 import { useEffect, useRef, useState } from "react";
 import { Toast } from "primereact/toast";
 
 export const Favourites = () => {
-  const [loading, setLoading] = useState(true)
-  const [arrayFavouritesCars, setArrayFavouritesCars] = useState<Favourite[]>([])
-  const toastFavorite = useRef<Toast>(null)
+  const [loading, setLoading] = useState(true);
+  const [arrayFavouritesCars, setArrayFavouritesCars] = useState<Favourite[]>(
+    []
+  );
+  const toastFavorite = useRef<Toast>(null);
 
   const deleteData = async (id: number) => {
-
-    await FavoritesService.delete(id).then(res => {
-      fetchFavoutiresCars()
-      toastFavorite.current?.show({ severity: 'error', summary: 'DELETED', detail: 'Favorite deleted', life: 3000 });
-    })
+    await FavoritesService.delete(id).then((res) => {
+      fetchFavoutiresCars();
+      toastFavorite.current?.show({
+        severity: "error",
+        summary: "DELETED",
+        detail: "Favorite deleted",
+        life: 3000,
+      });
+    });
   };
 
-
   const fetchFavoutiresCars = async () => {
-    setLoading(true)
+    setLoading(true);
     await FavoritesService.get().then((res) => {
-      setArrayFavouritesCars(res.data.content)
-      console.log(arrayFavouritesCars)
-    })
-    setLoading(false)
-  }
+      setArrayFavouritesCars(res.data.content);
+      console.log(arrayFavouritesCars);
+    });
+    setLoading(false);
+  };
 
   useEffect(() => {
-    fetchFavoutiresCars()
-  }, [])
+    fetchFavoutiresCars();
+  }, []);
 
   return (
     <div>
       <Toast ref={toastFavorite} position="bottom-right" />
-      {loading ? <h1>Loading ...</h1> : (!arrayFavouritesCars ? <h1>No Favorites added</h1> : arrayFavouritesCars.map((element) => <FavoriteCard key={element.id} favs={element} deleteData={deleteData} />))}
+      {loading ? (
+        <h1>Loading ...</h1>
+      ) : !arrayFavouritesCars ? (
+        <h1>No Favorites added</h1>
+      ) : (
+        arrayFavouritesCars.map((element) => (
+          <FavoriteCard
+            key={element.id}
+            favs={element}
+            deleteData={deleteData}
+          />
+        ))
+      )}
     </div>
   );
-}
+};
 
 export default Favourites;

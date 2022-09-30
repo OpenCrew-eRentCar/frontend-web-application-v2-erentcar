@@ -1,5 +1,5 @@
 import { Button } from "primereact/button";
-import Favourite from "../Models/Favourite.model";
+import Favourite from "../../../../Models/Favourite.model";
 
 type Props = {
   favs: Favourite,
