@@ -25,8 +25,8 @@ root.render(
         <Route path="/*" element={<Freeviews />} />
         <Route path="auth/*" element={<Authviews />}>
           <Route index element={<SearchCar />} />
-          <Route path="my-cars" element={<MyCars />} />
           <Route path="favourites" element={<Favourites />} />
+          <Route path="my-cars" element={<MyCars />} />
           <Route path="rents" element={<Rents />} />
           <Route path="reservations" element={<Reservations />} />
           <Route path="statistics" element={<Statistics />} />
