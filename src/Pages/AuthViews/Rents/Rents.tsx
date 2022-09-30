@@ -21,7 +21,7 @@ export const Rents = () => {
   })
 
   return (
-      <div className="w-full mx-auto lg:ml-5 max-w-[600px] px-3 lg:p-0 border-box lg:border-content">
+      <div className="w-full mx-auto px-3 lg:p-0 border-box lg:border-content">
           {rents.map((rent) => (
               <Rent key={rent.id} rent={rent} />
           ))}
