@@ -1,5 +1,3 @@
-import { number } from "yup";
-import Favourite from "../Models/Favourite.model";
 import http from "./http-common"
 
 class FavouriteService {
@@ -14,4 +12,4 @@ class FavouriteService {
     }
 }
 
-export default new FavouriteService
+export default new FavouriteService();

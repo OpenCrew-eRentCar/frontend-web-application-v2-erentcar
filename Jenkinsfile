@@ -10,7 +10,6 @@ pipeline {
     stage ("Build") {
       steps {
         bat "npm install"
-        bat "npm i -g firebase-tools "
         bat "npm run build"
       }
     }
