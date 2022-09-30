@@ -34,7 +34,6 @@ const schema = yup
     username: yup.string().required("El nombre de usuario es requerido"),
     password: yup
       .string()
-      .matches(Regex.PASSWORD, "La contraseña debe ser más segura")
       .required("La contraseña es requerida"),
     email: yup
       .string()

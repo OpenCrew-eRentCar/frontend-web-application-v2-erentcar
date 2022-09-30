@@ -22,9 +22,9 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/*" element={<Freeviews />} />
-        <Route path="favourites" element={<Favourites />} />
         <Route path="auth/*" element={<Authviews />} >
           <Route index element={<SearchCar />} />
+          <Route path="favourites" element={<Favourites />} />
           <Route path="my-cars" element={<MyCars />} />
           <Route path="rents" element={<Rents />} />
           <Route path="reservations" element={<Reservations />} />
