@@ -14,6 +14,7 @@ import Rents from "./Pages/AuthViews/Rents/Rents";
 import Reservations from "./Pages/AuthViews/Reservations/Reservations";
 import Statistics from "./Pages/AuthViews/Statistics/Statistics";
 import RentCar from "./Pages/AuthViews/RentCar/RentCar";
+import Profile from "./Pages/AuthViews/Profile/Profile";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -33,6 +34,7 @@ root.render(
           <Route path="rent-car" >
             <Route path=":carId" element={<RentCar />} />
           </Route>
+          <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
     </BrowserRouter>
