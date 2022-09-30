@@ -18,7 +18,7 @@ function FavoriteCard(props: Props) {
             </button>
           </div>
           <div className="pt-[25px]">
-            <img src={props.favs.car.imagePath} />
+            <img src={props.favs.car.imagePath} alt="car" />
           </div>
         </div>
         <div className="md:w-[256px] md:border-r-2 border-gray-300 px-[12px] py-[15px]">
