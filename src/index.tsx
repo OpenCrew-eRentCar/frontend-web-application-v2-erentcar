@@ -13,6 +13,7 @@ import Favourites from "./Pages/AuthViews/Favourites/Favourites";
 import Rents from "./Pages/AuthViews/Rents/Rents";
 import Reservations from "./Pages/AuthViews/Reservations/Reservations";
 import Statistics from "./Pages/AuthViews/Statistics/Statistics";
+import RentCar from "./Pages/AuthViews/RentCar/RentCar";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -22,13 +23,16 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/*" element={<Freeviews />} />
-        <Route path="auth/*" element={<Authviews />} >
+        <Route path="auth/*" element={<Authviews />}>
           <Route index element={<SearchCar />} />
-          <Route path="my-cars" element={<MyCars />} />
           <Route path="favourites" element={<Favourites />} />
+          <Route path="my-cars" element={<MyCars />} />
           <Route path="rents" element={<Rents />} />
           <Route path="reservations" element={<Reservations />} />
           <Route path="statistics" element={<Statistics />} />
+          <Route path="rent-car" >
+            <Route path=":carId" element={<RentCar />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

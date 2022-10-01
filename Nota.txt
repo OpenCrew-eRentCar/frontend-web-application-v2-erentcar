@@ -1,0 +1,2 @@
+// RUTA PARA VER favourites SIN AUTHENTICAR
+http://localhost:3000/favourites
