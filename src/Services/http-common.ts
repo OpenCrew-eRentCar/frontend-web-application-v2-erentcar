@@ -1,8 +1,10 @@
 import axios from "axios";
 
 const instance = axios.create({
-  //baseURL: "https://erentcar-evo.herokuapp.com/api/v1", // production
-  baseURL: "http://localhost:8081/api/v1", // development
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:8081/api/v1"
+      : "https://erentcar-evo.herokuapp.com/api/v1",
   headers: {
     "content-type": "application/json",
     "Access-Control-Allow-Origin": "*",
@@ -12,7 +14,11 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    if (!config.url?.includes("users/auth/sign-in") && !config.url?.includes("users/auth/sign-up") && config.headers)
+    if (
+      !config.url?.includes("users/auth/sign-in") &&
+      !config.url?.includes("users/auth/sign-up") &&
+      config.headers
+    )
       config.headers.Authorization = `Bearer ${localStorage.getItem("TOKEN")}`;
     return config;
   },

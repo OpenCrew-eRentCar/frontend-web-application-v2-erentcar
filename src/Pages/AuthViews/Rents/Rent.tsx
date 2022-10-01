@@ -1,13 +1,12 @@
 import RentEntity from "../../../Models/Rent.model";
-import {Button} from "primereact/button";
 
 interface RentProps {
     rent: RentEntity
 }
 
 export const Rent = (props: RentProps) => {
-    var startDate = `${props.rent.startDate.getDate}/${props.rent.startDate.getMonth}/${props.rent.startDate.getFullYear}`;
-    var finishDate = `${props.rent.finishDate.getDate}/${props.rent.finishDate.getMonth}/${props.rent.finishDate.getFullYear}`;
+    var startDate = `${props.rent.startDate}`;
+    var finishDate = `${props.rent.finishDate}`;
     return (
         <div className="bg-card-content flex rounded-[15px] shadow-sm mx-auto mt-[35px] max-w-[600px]" style={{background: 'whitesmoke'}}>
             <div className=" md:flex border-r-2 border-gray-300 md:border-r-0">
@@ -19,7 +18,7 @@ export const Rent = (props: RentProps) => {
                         </button>
                     </div>
                     <div className="pt-[25px]">
-                        <img src={props.rent.car.carModel.imagePath}/>
+                        <img src={props.rent.car.carModel.imagePath} alt="car"/>
                     </div>
                 </div>
                 <div className=" md:border-r-2 border-gray-300 px-[12px] py-[15px]">

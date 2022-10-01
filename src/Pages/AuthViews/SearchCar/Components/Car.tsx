@@ -1,6 +1,7 @@
 import "primeicons/primeicons.css";
 import { Button } from "primereact/button";
 import CarEntity from "../../../../Models/Car.model";
+import { useNavigate } from "react-router-dom";
 
 const gearBoxIcon = require("../../../../Assets/gearbox.png");
 
@@ -9,6 +10,8 @@ interface CarProps {
 }
 
 export const Car = (props: CarProps) => {
+  const navigate = useNavigate();
+
   return (
     <div className="grid grid-cols-2 gird-rows-2 lg:flex w-full lg:w-[600px] lg:h-[300px] mb-5 bg-[#F3F1F1] rounded-lg">
       <div className="col-span-1 lg:w-[220px] h-full bg-primary rounded-l-lg flex relative">
@@ -60,6 +63,7 @@ export const Car = (props: CarProps) => {
         <Button
           label="Ver oferta"
           className="lg:w-full !ml-5 lg:!ml-0 !text-sm btn-primary"
+          onClick={() => navigate("rent-car/" + props.car.id)}
         />
       </div>
     </div>

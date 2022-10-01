@@ -7,6 +7,10 @@ class CarsService {
   searchCars(filters: SearchCarFilters) {
     return http.post(this.BASE_URL + "/search", filters);
   }
+
+  getCarById(id: number) {
+    return http.get(this.BASE_URL + "/" + id);
+  }
 }
 
 export default new CarsService();

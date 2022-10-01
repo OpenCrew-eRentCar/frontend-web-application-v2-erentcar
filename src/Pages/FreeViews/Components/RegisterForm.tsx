@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import Regex from "../../../Utilities/Regex.utility";
 import { Toast } from "primereact/toast";
 import AuthService from "../../../Services/Auth.service";
 import { Role } from "../../../Models/Role.enum";
@@ -34,7 +33,6 @@ const schema = yup
     username: yup.string().required("El nombre de usuario es requerido"),
     password: yup
       .string()
-      .matches(Regex.PASSWORD, "La contraseña debe ser más segura")
       .required("La contraseña es requerida"),
     email: yup
       .string()

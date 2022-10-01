@@ -18,7 +18,7 @@ export const Rents = () => {
           })
     }
     fetchRents()
-  })
+  }, [])
 
   return (
       <div className="w-full mx-auto px-3 lg:p-0 border-box lg:border-content">
