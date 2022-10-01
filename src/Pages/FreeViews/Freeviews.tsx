@@ -16,12 +16,18 @@ export const Freeviews = () => {
         setDisplayAuthForm(true);
     };
 
-    const header = (
-        <img alt="Card" src="https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?ixlib=rb-1.2.1&ixid=MnwxMjA3fD
-        B8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"/>
+    const car1 = (
+        <img alt="Card" src="https://www.perurentacar.com/wp-content/uploads/CarRentalGallery/big_thumb_1599615237_nissan-versa.jpg"/>
     );
-
-
+    const car2 = (
+        <img alt="Card" src="https://www.perurentacar.com/wp-content/uploads/CarRentalGallery/big_thumb_1599608804_corolla-2019.jpg"/>
+    );
+    const car3 = (
+        <img alt="Card" src="https://www.perurentacar.com/wp-content/uploads/CarRentalGallery/big_thumb_1599614364_sportage.jpg"/>
+    );
+    const car4 = (
+        <img alt="Card" src="https://www.perurentacar.com/wp-content/uploads/CarRentalGallery/big_thumb_1599616690_toyota-yaris-2020.jpg"/>
+    );
 
     return (
         <div >
@@ -44,28 +50,31 @@ export const Freeviews = () => {
             </Dialog>
             <br></br><br></br>
             <div className="cars">
-                <p className="text-4xl">Este año recorre todo el Perú</p>
+                <p className="text-4xl xl:font-bold">Este año recorre todo el Perú</p>
             </div>
             <div>
-                <div className="flex flex-row-reverse flex-wrap card-container white-container">
-                    <Button label="Ver todos" className="p-button-outlined p-button-info" />
+                <div className="button">
+                    <div className="flex flex-row-reverse flex-wrap card-container white-container">
+                        <Button label="Ver todos" className="p-button-outlined p-button-info" />
+                    </div>
                 </div>
 
+                <br></br><br></br>
                 <div className="cars">
                     <div className="flex flex-wrap justify-content-center card-container blue-container gap-3">
-                        <Card  className="border-round w-12rem h-6rem" title="Kia Picanto" subTitle=" " style={{ width: '13em' }}  header={header}>
-                            <p className="m-0" style={{lineHeight: '0.8'}}>S/70</p>
+                        <Card  className="border-round w-12rem h-6rem" title="NISSAN VERSA" subTitle=" " style={{ width: '16em' }}  header={car1}>
+                            <p className="m-0" style={{lineHeight: '0.8'}}>$45.00</p>
                         </Card>
-                        <Card  className="border-round w-12rem h-6rem" title="Kia Picanto" subTitle=" " style={{ width: '13em' }}  header={header}>
-                            <p className="m-0" style={{lineHeight: '0.8'}}>S/70</p>
-                        </Card>
-
-                        <Card  className="border-round w-12rem h-6rem" title="Kia Picanto" subTitle=" " style={{ width: '13em' }}  header={header}>
-                            <p className="m-0" style={{lineHeight: '0.8'}}>S/70</p>
+                        <Card  className="border-round w-12rem h-6rem" title="TOYOTA COROLLA" subTitle=" " style={{ width: '16em' }}  header={car2}>
+                            <p className="m-0" style={{lineHeight: '0.8'}}>$55.00</p>
                         </Card>
 
-                        <Card  className="border-round w-12rem h-6rem" title="Kia Picanto" subTitle=" " style={{ width: '13em' }}  header={header}>
-                            <p className="m-0" style={{lineHeight: '0.8'}}>S/70</p>
+                        <Card  className="border-round w-12rem h-6rem" title="KIA SPORTAGE" subTitle=" " style={{ width: '16em' }}  header={car3}>
+                            <p className="m-0" style={{lineHeight: '0.8'}}>$68.00</p>
+                        </Card>
+
+                        <Card  className="border-round w-12rem h-6rem" title="TOYOTA YARIS" subTitle=" " style={{ width: '16em' }}  header={car4}>
+                            <p className="m-0" style={{lineHeight: '0.8'}}>$45.00</p>
                         </Card>
                     </div>
                 </div>
@@ -73,41 +82,55 @@ export const Freeviews = () => {
 
             <br></br><br></br>
             <div className="cars">
-                <p className="text-3xl">Estas son las razones porque las personas elijen eRentCar</p>
+                <p className="text-3xl xl:font-bold" >Estas son las razones porque las personas elijen eRentCar</p>
             </div>
 
             <div className="cars">
                 <div className="flex flex-wrap justify-content-center card-container blue-container gap-3">
-                    <Card  title="Seguridad Sanitaria" subTitle=" " style={{ width: '13em' }}>
+
+                    <Card style={{ width: '14em' }}>
+                        <div>
+                            <p className="text-lg xl:font-bold">Seguridad Sanitaria</p>
+                        </div>
                         <i className="pi pi-car mr-2"></i>
-                        <p className="m-0" style={{lineHeight: '0.8'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum
-                            nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+                        <p className="m-0" style={{lineHeight: '0.8'}}>
+                            Podrás solicitar el servicio de limpieza completa y
+                            desinfección antes de recibir el auto.
+                        </p>
                     </Card>
 
-                    <Card  title="Facilidad de alquiler" subTitle=" " style={{ width: '13em' }} >
-                        <i className="pi pi-building mr-2"></i>
-                        <p className="m-0" style={{lineHeight: '0.8'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum
-                            nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+                    <Card style={{ width: '14em' }} >
+                        <div>
+                            <p className="text-lg xl:font-bold">Facilidad de alquiler</p>
+                        </div>
+                        <i className="pi pi-home mr-2"></i>
+                        <p className="m-0" style={{lineHeight: '0.8'}}>
+                            Para tu comodidad, podrás solicitar el servicio de
+                            entrega y recojo en casa.
+                        </p>
                     </Card>
-                    <Card title="Genera Ganancias" subTitle=" " style={{ width: '13em' }} >
+                    <Card style={{ width: '14em' }} >
+                        <div>
+                            <p className="text-lg xl:font-bold">Genera Ganancias</p>
+                        </div>
                         <i className="pi pi-dollar mr-2"></i>
-                        <p className="m-0" style={{lineHeight: '0.8'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum
-                            nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+                        <p className="m-0" style={{lineHeight: '0.8'}}>
+                            Podrás obtener ganancias desde la comodidad de tu casa,
+                            si publicas un auto en nuestra plataformas.
+                        </p>
                     </Card>
-                    <Card  title="Estadísticas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"  subTitle=" " style={{ width: '13em' }} >
-
-                        <i className="pi pi-calendar-minus mr-2"></i>
-                        <p className="m-0" style={{lineHeight: '0.8'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum
-                            nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+                    <Card style={{ width: '14em' }} >
+                        <div>
+                            <p className="text-lg xl:font-bold">Estadísticas</p>
+                        </div>
+                        <i className="pi pi-chart-line mr-2"></i>
+                        <p className="m-0" style={{lineHeight: '0.8'}}>
+                            Podrás acceder a estadisticas de tu auto y su alquiler,
+                            si te suscribes a nuestras versión premiunm.
+                        </p>
                     </Card>
                 </div>
             </div>
-
-
 
 
         </div>
