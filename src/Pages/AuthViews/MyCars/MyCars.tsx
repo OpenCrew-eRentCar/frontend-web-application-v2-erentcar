@@ -1,5 +1,4 @@
 import CartCard from "./Components/CartCard";
-import Favourite from "../../../Models/Favourite.model";
 import FavoritesService from "../../../Services/Favorites.service";
 import CarsService from "../../../Services/Cars.service";
 import { useEffect, useRef, useState } from "react";
@@ -35,6 +34,7 @@ export const MyCars = () => {
 
   useEffect(() => {
     fetchCars();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

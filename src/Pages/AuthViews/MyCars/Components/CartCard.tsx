@@ -19,7 +19,7 @@ export default function CartCard(props: Props) {
                         </button>
     </div>*/}
                     <div>
-                        <img src={props.car.imagePath} />
+                        <img src={props.car.imagePath} alt="car"/>
                     </div>
                 </div>
                 <div className="md:w-[256px] md:border-r-2 border-gray-300 px-[12px] py-[15px]">
