@@ -11,6 +11,10 @@ class CarsService {
   getCarById(id: number) {
     return http.get(this.BASE_URL + "/" + id);
   }
+
+  getAll() {
+    return http.get(this.BASE_URL);
+  }
 }
 
 export default new CarsService();
