@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Navigate, Outlet } from "react-router";
+import { Navigate, Outlet, useLocation } from "react-router";
 import Header from "../../Components/Header";
 import SidebarMenu from "../../Components/SidebarMenu";
 
 export const Authviews = () => {
   const [showMenu, setShowMenu] = useState(false);
   const isAuth = localStorage.getItem("TOKEN") ? true : false;
+  const location = useLocation();
 
   return (
     <>
@@ -16,11 +17,14 @@ export const Authviews = () => {
             onClickMenuButton={() => setShowMenu(!showMenu)}
           />
           <div className="flex h-full relative mt-[68px]">
-            <SidebarMenu showMenu={showMenu} />
+            {location.pathname !== "/auth/profile" && (
+              <SidebarMenu showMenu={showMenu} />
+            )}
             <div
               className={
                 "flex flex-col auth-content w-full " +
-                (showMenu ? "active " : "")
+                (showMenu ? "active " : "") +
+                (location.pathname === "/auth/profile" ? "!ml-0" : "")
               }
             >
               <Outlet />
