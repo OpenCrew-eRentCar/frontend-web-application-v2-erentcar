@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import Regex from "../../../Utilities/Regex.utility";
 import { Toast } from "primereact/toast";
 import AuthService from "../../../Services/Auth.service";
 import { Role } from "../../../Models/Role.enum";
