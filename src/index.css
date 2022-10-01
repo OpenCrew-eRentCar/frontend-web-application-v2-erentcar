@@ -81,6 +81,11 @@ code {
   text-align: center;
 }
 
+.button{
+  height: 20px;
+  width: 79%;
+}
+
 @media (max-width: 1024px) {
   .navigation-menu.active {
     left: 0 !important;
