@@ -27,7 +27,6 @@ export const Favourites = () => {
     setLoading(true);
     await FavoritesService.get().then((res: any) => {
       setArrayFavouritesCars(res.data.content);
-      console.log(arrayFavouritesCars);
     });
     setLoading(false);
   };

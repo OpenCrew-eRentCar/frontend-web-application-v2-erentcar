@@ -27,7 +27,6 @@ export const MyCars = () => {
     setLoading(true);
     await CarsService.getAll().then((res: any) => {
       setArrayFavouritesCars(res.data.content);
-      console.log(arrayCars);
     });
     setLoading(false);
   };
