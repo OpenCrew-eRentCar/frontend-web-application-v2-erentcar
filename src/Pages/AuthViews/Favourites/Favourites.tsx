@@ -12,7 +12,7 @@ export const Favourites = () => {
   const toastFavorite = useRef<Toast>(null);
 
   const deleteData = async (id: number) => {
-    await FavoritesService.delete(id).then((res) => {
+    await FavoritesService.delete(id).then(() => {
       fetchFavoutiresCars();
       toastFavorite.current?.show({
         severity: "error",
@@ -25,9 +25,8 @@ export const Favourites = () => {
 
   const fetchFavoutiresCars = async () => {
     setLoading(true);
-    await FavoritesService.get().then((res) => {
+    await FavoritesService.get().then((res: any) => {
       setArrayFavouritesCars(res.data.content);
-      console.log(arrayFavouritesCars);
     });
     setLoading(false);
   };
