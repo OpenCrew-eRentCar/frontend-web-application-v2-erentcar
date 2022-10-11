@@ -1,5 +1,4 @@
 import RentEntity from "../../../../Models/Rent.model";
-import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { useState } from "react";
 import FavouriteButton from "../../../../Components/FavouriteButton";
