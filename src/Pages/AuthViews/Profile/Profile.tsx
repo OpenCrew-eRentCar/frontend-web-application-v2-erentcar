@@ -7,11 +7,15 @@ import GeneralConfiguration from "./Components/GeneralConfiguration";
 import MyCars from "./Components/MyCars";
 
 export const Profile = () => {
-  const [client] = useState<User>(
+  const [client, setClient] = useState<User>(
     JSON.parse(localStorage.getItem("CLIENT") || "")
   );
   const [user] = useState(JSON.parse(localStorage.getItem("USER") || ""));
   const navigate = useNavigate();
+
+  const updateClient = () => {
+    setClient(JSON.parse(localStorage.getItem("CLIENT") || ""));
+  };
 
   return (
     <div>
@@ -69,7 +73,7 @@ export const Profile = () => {
       <div className="lg:w-[950px] mx-auto">
         <TabView className="color-primary">
           <TabPanel header="Configuración general">
-            <GeneralConfiguration client={client} />
+            <GeneralConfiguration client={client} updateClient={updateClient} />
           </TabPanel>
           <TabPanel header="Mis autos">
             <MyCars client={client} />
