@@ -74,6 +74,7 @@ export const LoginForm = (props: LoginFormProps) => {
     await AuthService.login(data)
       .then(async (response) => {
         localStorage.setItem("TOKEN", response.data.resource.token);
+        localStorage.setItem("USER", JSON.stringify(response.data.resource));
         await getClientInfo();
         await new Promise((resolve) => setTimeout(resolve, 2000));
         navigate("/auth");
