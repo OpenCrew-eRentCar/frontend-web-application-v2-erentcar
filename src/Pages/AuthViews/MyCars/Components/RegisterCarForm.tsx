@@ -149,10 +149,10 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
             <Toast ref={toastRegister} position="bottom-right" />
 
             <h1 className="text-[32px] font-bold text-center mb-4">Añadir nuevo auto</h1>
-            <form className="p-fluid w-[480px] lg:w-[846px]" onSubmit={(e) => e.preventDefault()} >
-                <div className="block lg:flex">
+            <form className="p-fluid w-[320px] sm:w-[480px] lg:w-[846px]" onSubmit={(e) => e.preventDefault()} >
+                <div className="block lg:flex sm:px-8">
 
-                    <div className="w-full lg:w-[420px] mt-[13px]">
+                    <div className="w-[330px] sm:w-full lg:w-[352px] mt-[13px] lg:mr-[70px]">
                         <div className="">
                             <label htmlFor="carModelId" >Modelo de carro</label>
                             <select id="carModelId" {...register("carModelId")} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
@@ -249,7 +249,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                         </div>
                     </div>
 
-                    <div className="w-full lg:w-[420px] lg:ml-3">
+                    <div className="w-[330px] sm:w-full lg:w-[352px] lg:ml-3">
                         <div>
                             <label htmlFor="imagePath" className="block mt-3">
                                 URL de imagen del Carro
@@ -427,7 +427,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                     ) : (
                         <>
                             <Button
-                                label="Registrarse"
+                                label="Añadir"
                                 className="!mt-6 mb-auto btn-primary"
                                 onClick={handleSubmit(onSubmit)}
                             />
