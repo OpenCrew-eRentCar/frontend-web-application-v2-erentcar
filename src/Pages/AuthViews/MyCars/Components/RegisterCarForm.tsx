@@ -84,7 +84,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
         toastRegister.current?.show({
             severity: "success",
             summary: "Registro",
-            detail: "Registro de usuario exitoso",
+            detail: "Registro de carro exitoso",
             life: 3000,
         });
     };
@@ -93,7 +93,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
         toastRegister.current?.show({
             severity: "error",
             summary: "Registro",
-            detail: "Error al registrar al usuario",
+            detail: "Error al registrar carro",
             life: 3000,
         });
     };
