@@ -61,11 +61,8 @@ const schema = yup
     .required();
 
 export const RegisterCarForm = (props: RegisterFormProps) => {
-    const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [carModels, setCarmodels] = useState<CarModel[]>([])
-    const [carCategory, setCarCategory] = useState(CarCategory)
-    const [mechanicCondition, setMechainCondition] = useState(MechanicConditions)
+    const [carModels, setCarmodels] = useState<CarModel[]>([]);
     const toastRegister = useRef<Toast>(null);
     const {
         register,
@@ -106,7 +103,6 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
         setLoading(true);
         await CarsService.createCar(data)
             .then((res) => {
-                console.log(res)
                 showToastRegisterSucess();
                 props.fetchCars()
                 props.setDisplayAuthForm(false)
@@ -115,7 +111,6 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                 console.log(err)
                 showToastRegisterError();
             })
-        console.log(data)
         setLoading(false);
     };
 
@@ -127,17 +122,15 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
     }, [errors]);
 
     useEffect(() => {
-        console.log(carCategory)
-        console.log(mechanicCondition)
         fetchCarModels()
         register("clientId", { value: JSON.parse(localStorage.getItem("USER") || "").id })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const fetchCarModels = async () => {
         await CarModelsService.getAllCarModels()
             .then((res) => {
                 setCarmodels(res.data.content)
-                console.log(carModels)
             })
             .catch((err) => {
                 console.log(err)
@@ -165,7 +158,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                         <div className="mt-[12px]">
                             <label htmlFor="category">Categoria</label>
                             <select id="category"{...register("category")} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
-                                {Object.keys(carCategory).map((element) =>
+                                {Object.keys(CarCategory).map((element) =>
                                     <option key={element} value={element}>{element}</option>
                                 )}
                             </select>
