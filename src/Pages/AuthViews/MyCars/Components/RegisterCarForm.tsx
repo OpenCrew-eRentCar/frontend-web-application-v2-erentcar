@@ -148,270 +148,274 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
         <div>
             <Toast ref={toastRegister} position="bottom-right" />
 
-            <h1 className="text-[32px] font-bold text-center mb-4">Registrar Carro</h1>
-            <form className="p-fluid w-[480px]" onSubmit={(e) => e.preventDefault()}>
-                <div>
-                    <h2 className="font-bold mb-4">Información del Carro</h2>
+            <h1 className="text-[32px] font-bold text-center mb-4">Añadir nuevo auto</h1>
+            <form className="p-fluid w-[480px] lg:w-[846px]" onSubmit={(e) => e.preventDefault()} >
+                <div className="block lg:flex">
 
-                    <div>
-                        <label htmlFor="address" className="block mt-3">
-                            Dirección
-                        </label>
-                        <InputText
-                            id="address"
-                            placeholder="Ingrese su dirección"
-                            disabled={loading}
-                            className={errors.address && "p-invalid"}
-                            {...register("address")}
-                        />
-                        {errors.address && (
-                            <small id="address-help" className="p-error block">
-                                {errors.address?.message}
-                            </small>
-                        )}
-                    </div>
+                    <div className="w-full lg:w-[420px] mt-[13px]">
+                        <div className="">
+                            <label htmlFor="carModelId" >Modelo de carro</label>
+                            <select id="carModelId" {...register("carModelId")} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
+                                {carModels.length !== 0 && carModels.map((element) =>
+                                    <option key={element.id} value={element.id}>{element.name}</option>
+                                )}
+                            </select>
+                        </div>
 
-                    <div>
-                        <label htmlFor="imagePath" className="block mt-3">
-                            URL de imagen del Carro
-                        </label>
-                        <InputText
-                            id="imagePath"
-                            placeholder="Ingrese la URL de su imagen del Carro"
-                            disabled={loading}
-                            className={errors.imagePath && "p-invalid"}
-                            {...register("imagePath")}
-                        />
-                        {errors.imagePath && (
-                            <small id="imagePath-help" className="p-error block">
-                                {errors.imagePath?.message}
-                            </small>
-                        )}
-                    </div>
+                        <div className="mt-[12px]">
+                            <label htmlFor="category">Categoria</label>
+                            <select id="category"{...register("category")} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
+                                {Object.keys(carCategory).map((element) =>
+                                    <option key={element} value={element}>{element}</option>
+                                )}
+                            </select>
+                        </div>
 
-                    <div>
-                        <label htmlFor="active" >Estado</label>
-                        <select {...register("active", { setValueAs: (value) => value === "true" ? true : false })}>
-                            <option value={"true"} >True</option>
-                            <option value={"false"} >False</option>
-                        </select>
-                    </div>
+                        <div>
+                            <label htmlFor="mechanicCondition" className="block mt-3">
+                                Condicion Mecanica
+                            </label>
+                            <select id="mechanicCondition"{...register("mechanicCondition")} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
+                                {Object.keys(MechanicConditions).map((element) =>
+                                    <option key={element} value={element}>{element}</option>
+                                )}
+                            </select>
+                        </div>
 
-                    <div>
-                        <label htmlFor="carModelId" >Modelo de carro</label>
-                        <select {...register("carModelId")}>
-                            {carModels.length !== 0 && carModels.map((element) =>
-                                <option key={element.id} value={element.id}>{element.name}</option>
+                        <div className="mt-[12px]">
+                            <label htmlFor="manual">Manual</label>
+                            <select id="manual"{...register("manual", { setValueAs: (value) => value === "true" ? true : false })} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
+                                <option value={"true"} >True</option>
+                                <option value={"false"} >False</option>
+                            </select>
+                        </div>
+
+                        <div className="mt-[12px]">
+                            <label htmlFor="active" >Estado</label>
+                            <select id="active" {...register("active", { setValueAs: (value) => value === "true" ? true : false })} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
+                                <option value={"true"} >True</option>
+                                <option value={"false"} >False</option>
+                            </select>
+                        </div>
+
+                        <div className="mt-[12px]">
+                            <label htmlFor="insuranceType">
+                                Tipo de Seguro
+                            </label>
+                            <select id="insuranceType" {...register("insuranceType")} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
+                                <option value="RIMAC">RIMAC</option>
+                                <option value="PACIFICO">PACIFICO</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label htmlFor="seating" className="block mt-3">
+                                Asientos
+                            </label>
+                            <InputText
+                                id="seating"
+                                placeholder="Ingrese Numero de Asientos"
+                                disabled={loading}
+                                className={errors.seating && "p-invalid"}
+                                {...register("seating")}
+                                type="number"
+                                min={0}
+                                max={999999999}
+                                defaultValue={0}
+                            />
+                            {errors.seating && (
+                                <small id="seating-help" className="p-error block">
+                                    {errors.seating?.message}
+                                </small>
                             )}
-                        </select>
-                    </div>
+                        </div>
 
-                    <div>
-                        <label htmlFor="carValueInDollars" className="block mt-3">
-                            Valor del Carro en Dolares
-                        </label>
-                        <InputText
-                            id="carValueInDollars"
-                            placeholder="Ingrese el Valor del Carro en Dolares"
-                            disabled={loading}
-                            className={errors.carValueInDollars && "p-invalid"}
-                            {...register("carValueInDollars")}
-                            type="number"
-                            min={0}
-                            max={999999999}
-                            defaultValue={0}
-                        />
-                        {errors.carValueInDollars && (
-                            <small id="carValueInDollars-help" className="p-error block">
-                                {errors.carValueInDollars?.message}
-                            </small>
-                        )}
-                    </div>
-
-                    <div>
-                        <label htmlFor="category">Categoria</label>
-                        <select id="category"{...register("category")}>
-                            {Object.keys(carCategory).map((element) =>
-                                <option key={element} value={element}>{element}</option>
+                        <div>
+                            <label htmlFor="address" className="block mt-3">
+                                Dirección
+                            </label>
+                            <InputText
+                                id="address"
+                                placeholder="Ingrese su dirección"
+                                disabled={loading}
+                                className={errors.address && "p-invalid"}
+                                {...register("address")}
+                            />
+                            {errors.address && (
+                                <small id="address-help" className="p-error block">
+                                    {errors.address?.message}
+                                </small>
                             )}
-                        </select>
+                        </div>
                     </div>
 
-                    <div>
-                        <label htmlFor="extraInformation" className="block mt-3">
-                            Informacion Extra
-                        </label>
-                        <InputText
-                            id="extraInformation"
-                            placeholder="Ingrese Informacion Extra"
-                            disabled={loading}
-                            className={errors.extraInformation && "p-invalid"}
-                            {...register("extraInformation")}
-                        />
-                        {errors.extraInformation && (
-                            <small id="extraInformation-help" className="p-error block">
-                                {errors.extraInformation?.message}
-                            </small>
-                        )}
-                    </div>
-
-                    <div>
-                        <label htmlFor="manual">Manual</label>
-                        <select {...register("manual", { setValueAs: (value) => value === "true" ? true : false })}>
-                            <option value={"true"} >True</option>
-                            <option value={"false"} >False</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label htmlFor="mechanicCondition" className="block mt-3">
-                            Condicion Mecanica
-                        </label>
-                        <select id="mechanicCondition"{...register("mechanicCondition")}>
-                            {Object.keys(MechanicConditions).map((element) =>
-                                <option key={element} value={element}>{element}</option>
+                    <div className="w-full lg:w-[420px] lg:ml-3">
+                        <div>
+                            <label htmlFor="imagePath" className="block mt-3">
+                                URL de imagen del Carro
+                            </label>
+                            <InputText
+                                id="imagePath"
+                                placeholder="Ingrese la URL de su imagen del Carro"
+                                disabled={loading}
+                                className={errors.imagePath && "p-invalid"}
+                                {...register("imagePath")}
+                            />
+                            {errors.imagePath && (
+                                <small id="imagePath-help" className="p-error block">
+                                    {errors.imagePath?.message}
+                                </small>
                             )}
-                        </select>
+                        </div>
+
+                        <div>
+                            <label htmlFor="carValueInDollars" className="block mt-3">
+                                Valor del Carro en Dolares
+                            </label>
+                            <InputText
+                                id="carValueInDollars"
+                                placeholder="Ingrese el Valor del Carro en Dolares"
+                                disabled={loading}
+                                className={errors.carValueInDollars && "p-invalid"}
+                                {...register("carValueInDollars")}
+                                type="number"
+                                min={0}
+                                max={999999999}
+                                defaultValue={0}
+                            />
+                            {errors.carValueInDollars && (
+                                <small id="carValueInDollars-help" className="p-error block">
+                                    {errors.carValueInDollars?.message}
+                                </small>
+                            )}
+                        </div>
+
+                        <div>
+                            <label htmlFor="extraInformation" className="block mt-3">
+                                Informacion Extra
+                            </label>
+                            <InputText
+                                id="extraInformation"
+                                placeholder="Ingrese Informacion Extra"
+                                disabled={loading}
+                                className={errors.extraInformation && "p-invalid"}
+                                {...register("extraInformation")}
+                            />
+                            {errors.extraInformation && (
+                                <small id="extraInformation-help" className="p-error block">
+                                    {errors.extraInformation?.message}
+                                </small>
+                            )}
+                        </div>
+
+                        <div>
+                            <label htmlFor="mileage" className="block mt-3">
+                                Kilometraje
+                            </label>
+                            <InputText
+                                id="mileage"
+                                placeholder="Ingrese el Kilometraje"
+                                disabled={loading}
+                                className={errors.mileage && "p-invalid"}
+                                {...register("mileage")}
+                                type="number"
+                                min={0}
+                                max={999999999}
+                                defaultValue={0}
+                            />
+                            {errors.mileage && (
+                                <small id="mileage-help" className="p-error block">
+                                    {errors.mileage?.message}
+                                </small>
+                            )}
+                        </div>
+
+                        <div>
+                            <label htmlFor="rate" className="block mt-3">
+                                Velocidad
+                            </label>
+                            <InputText
+                                id="rate"
+                                placeholder="Ingrese la Velocidad"
+                                disabled={loading}
+                                className={errors.rate && "p-invalid"}
+                                {...register("rate")}
+                                type="number"
+                                min={0}
+                                max={999999999}
+                                defaultValue={0}
+                            />
+                            {errors.rate && (
+                                <small id="rate-help" className="p-error block">
+                                    {errors.rate?.message}
+                                </small>
+                            )}
+                        </div>
+
+                        <div>
+                            <label htmlFor="rentAmountDay" className="block mt-3">
+                                Costo de Renta Diaria
+                            </label>
+                            <InputText
+                                id="rentAmountDay"
+                                placeholder="Ingrese el Costo de Renta Diaria"
+                                disabled={loading}
+                                className={errors.rentAmountDay && "p-invalid"}
+                                {...register("rentAmountDay")}
+                                type="number"
+                                min={0}
+                                max={999999999}
+                                defaultValue={0}
+                            />
+                            {errors.rentAmountDay && (
+                                <small id="rentAmountDay-help" className="p-error block">
+                                    {errors.rentAmountDay?.message}
+                                </small>
+                            )}
+                        </div>
+
+                        <div>
+                            <label htmlFor="year" className="block mt-3">
+                                Año
+                            </label>
+                            <InputText
+                                id="year"
+                                placeholder="Ingrese Año del Carro"
+                                disabled={loading}
+                                className={errors.year && "p-invalid"}
+                                {...register("year")}
+                                type="number"
+                                min={0}
+                                max={999999999}
+                                defaultValue={0}
+                            />
+                            {errors.year && (
+                                <small id="year-help" className="p-error block">
+                                    {errors.year?.message}
+                                </small>
+                            )}
+                        </div>
+
+                        <div>
+                            <label htmlFor="licensePlate" className="block mt-3">
+                                Placa
+                            </label>
+                            <InputText
+                                id="licensePlate"
+                                placeholder="Ingrese su dirección"
+                                disabled={loading}
+                                className={errors.licensePlate && "p-invalid"}
+                                {...register("licensePlate")}
+                            />
+                            {errors.licensePlate && (
+                                <small id="licensePlate-help" className="p-error block">
+                                    {errors.licensePlate?.message}
+                                </small>
+                            )}
+                        </div>
                     </div>
 
-                    <div>
-                        <label htmlFor="mileage" className="block mt-3">
-                            Kilometraje
-                        </label>
-                        <InputText
-                            id="mileage"
-                            placeholder="Ingrese el Kilometraje"
-                            disabled={loading}
-                            className={errors.mileage && "p-invalid"}
-                            {...register("mileage")}
-                            type="number"
-                            min={0}
-                            max={999999999}
-                            defaultValue={0}
-                        />
-                        {errors.mileage && (
-                            <small id="mileage-help" className="p-error block">
-                                {errors.mileage?.message}
-                            </small>
-                        )}
-                    </div>
-
-                    <div>
-                        <label htmlFor="rate" className="block mt-3">
-                            Velocidad
-                        </label>
-                        <InputText
-                            id="rate"
-                            placeholder="Ingrese la Velocidad"
-                            disabled={loading}
-                            className={errors.rate && "p-invalid"}
-                            {...register("rate")}
-                            type="number"
-                            min={0}
-                            max={999999999}
-                            defaultValue={0}
-                        />
-                        {errors.rate && (
-                            <small id="rate-help" className="p-error block">
-                                {errors.rate?.message}
-                            </small>
-                        )}
-                    </div>
-
-                    <div>
-                        <label htmlFor="rentAmountDay" className="block mt-3">
-                            Costo de Renta Diaria
-                        </label>
-                        <InputText
-                            id="rentAmountDay"
-                            placeholder="Ingrese el Costo de Renta Diaria"
-                            disabled={loading}
-                            className={errors.rentAmountDay && "p-invalid"}
-                            {...register("rentAmountDay")}
-                            type="number"
-                            min={0}
-                            max={999999999}
-                            defaultValue={0}
-                        />
-                        {errors.rentAmountDay && (
-                            <small id="rentAmountDay-help" className="p-error block">
-                                {errors.rentAmountDay?.message}
-                            </small>
-                        )}
-                    </div>
-
-                    <div>
-                        <label htmlFor="seating" className="block mt-3">
-                            Asientos
-                        </label>
-                        <InputText
-                            id="seating"
-                            placeholder="Ingrese Numero de Asientos"
-                            disabled={loading}
-                            className={errors.seating && "p-invalid"}
-                            {...register("seating")}
-                            type="number"
-                            min={0}
-                            max={999999999}
-                            defaultValue={0}
-                        />
-                        {errors.seating && (
-                            <small id="seating-help" className="p-error block">
-                                {errors.seating?.message}
-                            </small>
-                        )}
-                    </div>
-
-                    <div>
-                        <label htmlFor="year" className="block mt-3">
-                            Año
-                        </label>
-                        <InputText
-                            id="year"
-                            placeholder="Ingrese Año del Carro"
-                            disabled={loading}
-                            className={errors.year && "p-invalid"}
-                            {...register("year")}
-                            type="number"
-                            min={0}
-                            max={999999999}
-                            defaultValue={0}
-                        />
-                        {errors.year && (
-                            <small id="year-help" className="p-error block">
-                                {errors.year?.message}
-                            </small>
-                        )}
-                    </div>
-
-                    <div>
-                        <label htmlFor="licensePlate" className="block mt-3">
-                            Placa
-                        </label>
-                        <InputText
-                            id="licensePlate"
-                            placeholder="Ingrese su dirección"
-                            disabled={loading}
-                            className={errors.licensePlate && "p-invalid"}
-                            {...register("licensePlate")}
-                        />
-                        {errors.licensePlate && (
-                            <small id="licensePlate-help" className="p-error block">
-                                {errors.licensePlate?.message}
-                            </small>
-                        )}
-                    </div>
-
-                    <div>
-                        <label htmlFor="insuranceType" className="block mt-3">
-                            Tipo de Seguro
-                        </label>
-                        <select id="insuranceType" {...register("insuranceType")}>
-                            <option value="RIMAC">RIMAC</option>
-                            <option value="PACIFICO">PACIFICO</option>
-                        </select>
-                    </div>
-
+                </div>
                     {loading ? (
                         <div className="flex">
                             <ProgressSpinner
@@ -435,7 +439,6 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                             />
                         </>
                     )}
-                </div>
             </form>
         </div>
     );
