@@ -32,7 +32,7 @@ export const MyCars = () => {
 
   const fetchCars = async () => {
     setLoading(true);
-    await CarsService.getAll().then((res: any) => {
+    await CarsService.getAllClientCars().then((res: any) => {
       setArrayFavouritesCars(res.data.content);
     });
     setLoading(false);

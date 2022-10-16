@@ -17,7 +17,11 @@ class CarsService {
   }
 
   createCar(data: any) {
-    return http.post(this.BASE_URL, data)
+    return http.post(this.BASE_URL, data);
+  }
+
+  getAllClientCars() {
+    return http.get(this.BASE_URL + "/client");
   }
 }
 
