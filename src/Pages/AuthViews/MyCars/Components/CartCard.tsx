@@ -8,18 +8,13 @@ type Props = {
 }
 
 export default function CartCard(props: Props) {
-    
+
     return (
         <div className="bg-card-content flex max-w-[400px] md:max-w-[600px] md:max-h-[300px] rounded-[15px] shadow-sm mx-auto mt-[23px]">
             <div className=" md:w-[476px] md:flex border-r-2 border-gray-300 md:border-r-0">
-                <div className="md:w-[220px] bg-card-image rounded-l-[15px] grid content-center">{/*
-                    <div className="hidden md:flex justify-end pr-[16px] pt-[16px] h-[50px]">
-                        <button onClick={() => props.deleteData(props.id)}>
-                            <i className="pi pi-heart-fill" style={{ fontSize: "2em" }}></i>
-                        </button>
-    </div>*/}
+                <div className="md:w-[220px] bg-card-image rounded-l-[15px] grid content-center">
                     <div>
-                        <img src={props.car.imagePath} alt="car"/>
+                        <img src={props.car.imagePath} alt="car" />
                     </div>
                 </div>
                 <div className="md:w-[256px] md:border-r-2 border-gray-300 px-[12px] py-[15px]">
