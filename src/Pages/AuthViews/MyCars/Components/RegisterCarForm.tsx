@@ -64,6 +64,7 @@ const schema = yup
 export const RegisterCarForm = (props: RegisterFormProps) => {
     const [update, setUpdate] = useState(false)
     const [loading, setLoading] = useState(false);
+    const [loadingCarModels, setLoadingCarModels] = useState(true)
     const [carModels, setCarmodels] = useState<CarModel[]>([])
     const [carCategory, setCarCategory] = useState(CarCategory)
     const [mechanicCondition, setMechainCondition] = useState(MechanicConditions)
@@ -144,12 +145,13 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
 
     const fetchCarModels = async () => {
         await CarModelsService.getAllCarModels()
-            .then((res) => {
-                setCarmodels(res.data.content)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        .then((res) => {
+            setCarmodels(res.data.content)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        setLoadingCarModels(false)
     }
 
     useEffect(() => {
@@ -169,14 +171,14 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                 <div className="block lg:flex sm:px-8">
 
                     <div className="w-[330px] sm:w-full lg:w-[352px] mt-[13px] lg:mr-[70px]">
-                        <div className="">
+                        {!loadingCarModels && <div className="">
                             <label htmlFor="carModelId" >Modelo de carro</label>
                             <select id="carModelId" defaultValue={!props.carData.id ? 1 : props.carData.carModel.id} {...register("carModelId")} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
-                                {carModels.length !== 0 && carModels.map((element) =>
+                                {carModels.map((element) =>
                                     <option key={element.id} value={element.id}>{element.name}</option>
                                 )}
                             </select>
-                        </div>
+                        </div>}
 
                         <div className="mt-[12px]">
                             <label htmlFor="category">Categoria</label>
