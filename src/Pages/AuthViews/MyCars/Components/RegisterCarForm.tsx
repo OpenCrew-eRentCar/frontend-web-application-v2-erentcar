@@ -11,16 +11,6 @@ import CarModelsService from "../../../../Services/CarModelsService";
 import CarModel from "../../../../Models/CarModel.model";
 import { CarCategory } from "../../../../Models/CarCategory.enum";
 import { MechanicConditions } from "../../../../Models/MechanicConditions.enum";
-import Select from 'react-select';
-
-// SELECT OPTIONS
-const optiones = [
-    { value: 'C++', label: 'C++' },
-    { value: 'JAVA', label: 'JAVA' },
-    { value: 'Javascript', label: 'Javascript' },
-    { value: 'Python', label: 'Python' },
-    { value: 'Swift', label: 'Swift' }
-];
 
 interface RegisterFormProps {
     displayAuthForm: boolean;
@@ -77,7 +67,6 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
     const [carModels, setCarmodels] = useState<CarModel[]>([])
     const [carCategory, setCarCategory] = useState(CarCategory)
     const [mechanicCondition, setMechainCondition] = useState(MechanicConditions)
-    const [options, setOptions] = useState<any[]>(optiones)
     const toastRegister = useRef<Toast>(null);
     const {
         register,
@@ -148,7 +137,6 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
     }
 
     useEffect(() => {
-        //if there are errors, show the general information form
         if (Object.keys(errors).length > 0) {
             showToastInvalidForm();
         }
@@ -158,7 +146,6 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
         await CarModelsService.getAllCarModels()
             .then((res) => {
                 setCarmodels(res.data.content)
-                //console.log("Car model name: ", props.carData)
             })
             .catch((err) => {
                 console.log(err)
@@ -166,13 +153,9 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
     }
 
     useEffect(() => {
-        //console.log(carCategory)
-        //console.log(mechanicCondition)
-        //console.log("Data props: ", props.carData)
         if (props.carData.id) {
             setUpdate(true)
         }
-        //console.log(props.carData)
         fetchCarModels()
         register("clientId", { value: JSON.parse(localStorage.getItem("USER") || "").id })
     }, [])

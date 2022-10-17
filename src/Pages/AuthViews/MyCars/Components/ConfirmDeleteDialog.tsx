@@ -1,6 +1,4 @@
 import { Button } from 'primereact/button'
-import { Toast } from 'primereact/toast'
-import React, { useRef } from 'react'
 
 interface ConfirmDeleteProps {
     handleDelete: () => void,
