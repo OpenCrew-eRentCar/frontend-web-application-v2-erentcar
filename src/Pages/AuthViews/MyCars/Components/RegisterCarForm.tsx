@@ -11,16 +11,27 @@ import CarModelsService from "../../../../Services/CarModelsService";
 import CarModel from "../../../../Models/CarModel.model";
 import { CarCategory } from "../../../../Models/CarCategory.enum";
 import { MechanicConditions } from "../../../../Models/MechanicConditions.enum";
+import Select from 'react-select';
+
+// SELECT OPTIONS
+const optiones = [
+    { value: 'C++', label: 'C++' },
+    { value: 'JAVA', label: 'JAVA' },
+    { value: 'Javascript', label: 'Javascript' },
+    { value: 'Python', label: 'Python' },
+    { value: 'Swift', label: 'Swift' }
+];
 
 interface RegisterFormProps {
     displayAuthForm: boolean;
     setDisplayAuthForm: (value: boolean) => void;
     fetchCars: () => void;
+    carData: any
 }
 
 type Inputs = {
     // --- CAR DATA ---
-
+    id: number,
     address: string;
     imagePath: string;
     active: boolean;
@@ -55,17 +66,18 @@ const schema = yup
         rentAmountDay: yup.number().min(0).max(999999999).required("Ingrese el monto de renta mensual."),
         seating: yup.number().min(0).max(999999999).required("Ingrese el numero de asientos."),
         year: yup.number().min(0).max(999999999).required("Ingrese el año."),
-        licensePlate: yup.string().required("Ingrese la licencia."),
-        insuranceType: yup.string().required("Ingrese la aseguradora."),
+        //licensePlate: yup.string().required("Ingrese la licencia."),
+        //insuranceType: yup.string().required("Ingrese la aseguradora."),
     })
     .required();
 
 export const RegisterCarForm = (props: RegisterFormProps) => {
-    const [showPassword, setShowPassword] = useState(false);
+    const [update, setUpdate] = useState(false)
     const [loading, setLoading] = useState(false);
     const [carModels, setCarmodels] = useState<CarModel[]>([])
     const [carCategory, setCarCategory] = useState(CarCategory)
     const [mechanicCondition, setMechainCondition] = useState(MechanicConditions)
+    const [options, setOptions] = useState<any[]>(optiones)
     const toastRegister = useRef<Toast>(null);
     const {
         register,
@@ -119,6 +131,22 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
         setLoading(false);
     };
 
+    const onUpdate: SubmitHandler<Inputs> = async (data) => {
+        setLoading(true)
+        await CarsService.updateCar(data, props.carData.id)
+            .then((res) => {
+                console.log(res)
+                showToastRegisterSucess();
+                props.fetchCars()
+                props.setDisplayAuthForm(false)
+            })
+            .catch((err) => {
+                console.log(err)
+                showToastRegisterError();
+            })
+        setLoading(false)
+    }
+
     useEffect(() => {
         //if there are errors, show the general information form
         if (Object.keys(errors).length > 0) {
@@ -126,23 +154,28 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
         }
     }, [errors]);
 
-    useEffect(() => {
-        console.log(carCategory)
-        console.log(mechanicCondition)
-        fetchCarModels()
-        register("clientId", { value: JSON.parse(localStorage.getItem("USER") || "").id })
-    }, [])
-
     const fetchCarModels = async () => {
         await CarModelsService.getAllCarModels()
             .then((res) => {
                 setCarmodels(res.data.content)
-                console.log(carModels)
+                //console.log("Car model name: ", props.carData)
             })
             .catch((err) => {
                 console.log(err)
             })
     }
+
+    useEffect(() => {
+        //console.log(carCategory)
+        //console.log(mechanicCondition)
+        //console.log("Data props: ", props.carData)
+        if (props.carData.id) {
+            setUpdate(true)
+        }
+        //console.log(props.carData)
+        fetchCarModels()
+        register("clientId", { value: JSON.parse(localStorage.getItem("USER") || "").id })
+    }, [])
 
     return (
         <div>
@@ -155,7 +188,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                     <div className="w-[330px] sm:w-full lg:w-[352px] mt-[13px] lg:mr-[70px]">
                         <div className="">
                             <label htmlFor="carModelId" >Modelo de carro</label>
-                            <select id="carModelId" {...register("carModelId")} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
+                            <select id="carModelId" defaultValue={!props.carData.id ? 1 : props.carData.carModel.id} {...register("carModelId")} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
                                 {carModels.length !== 0 && carModels.map((element) =>
                                     <option key={element.id} value={element.id}>{element.name}</option>
                                 )}
@@ -164,7 +197,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
 
                         <div className="mt-[12px]">
                             <label htmlFor="category">Categoria</label>
-                            <select id="category"{...register("category")} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
+                            <select id="category" defaultValue={!props.carData.id ? carCategory.LARGE : props.carData.category} {...register("category")} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
                                 {Object.keys(carCategory).map((element) =>
                                     <option key={element} value={element}>{element}</option>
                                 )}
@@ -175,16 +208,15 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                             <label htmlFor="mechanicCondition" className="block mt-3">
                                 Condicion Mecanica
                             </label>
-                            <select id="mechanicCondition"{...register("mechanicCondition")} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
-                                {Object.keys(MechanicConditions).map((element) =>
-                                    <option key={element} value={element}>{element}</option>
-                                )}
+                            <select id="mechanicCondition" defaultValue={!props.carData.id ? mechanicCondition.EXCELLENT : props.carData.mechanicConditions} {...register("mechanicCondition")} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
+                                {Object.keys(mechanicCondition).map((element) =>
+                                    <option key={element} value={element}>{element}</option>)}
                             </select>
                         </div>
 
                         <div className="mt-[12px]">
                             <label htmlFor="manual">Manual</label>
-                            <select id="manual"{...register("manual", { setValueAs: (value) => value === "true" ? true : false })} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
+                            <select id="manual" defaultValue={`${!props.carData.id ? "true" : `${props.carData.manual}`}`} {...register("manual", { setValueAs: (value) => value === "true" ? true : false })} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
                                 <option value={"true"} >True</option>
                                 <option value={"false"} >False</option>
                             </select>
@@ -192,21 +224,21 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
 
                         <div className="mt-[12px]">
                             <label htmlFor="active" >Estado</label>
-                            <select id="active" {...register("active", { setValueAs: (value) => value === "true" ? true : false })} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
+                            <select id="active" defaultValue={`${!props.carData.id ? "true" : `${props.carData.active}`}`} {...register("active", { setValueAs: (value) => value === "true" ? true : false })} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
                                 <option value={"true"} >True</option>
                                 <option value={"false"} >False</option>
                             </select>
                         </div>
 
-                        <div className="mt-[12px]">
+                        {!update && <div className="mt-[12px]">
                             <label htmlFor="insuranceType">
                                 Tipo de Seguro
                             </label>
-                            <select id="insuranceType" {...register("insuranceType")} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
+                            <select id="insuranceType" defaultValue={"PACIFICO"} {...register("insuranceType")} className="w-full border-[1px] border-gray-300 h-[50px] rounded-md px-2">
                                 <option value="RIMAC">RIMAC</option>
                                 <option value="PACIFICO">PACIFICO</option>
                             </select>
-                        </div>
+                        </div>}
 
                         <div>
                             <label htmlFor="seating" className="block mt-3">
@@ -221,7 +253,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                                 type="number"
                                 min={0}
                                 max={999999999}
-                                defaultValue={0}
+                                defaultValue={!props.carData.id ? 0 : props.carData.seating}
                             />
                             {errors.seating && (
                                 <small id="seating-help" className="p-error block">
@@ -238,6 +270,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                                 id="address"
                                 placeholder="Ingrese su dirección"
                                 disabled={loading}
+                                defaultValue={!props.carData.id ? "" : props.carData.address}
                                 className={errors.address && "p-invalid"}
                                 {...register("address")}
                             />
@@ -259,6 +292,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                                 placeholder="Ingrese la URL de su imagen del Carro"
                                 disabled={loading}
                                 className={errors.imagePath && "p-invalid"}
+                                defaultValue={!props.carData.id ? "" : props.carData.imagePath}
                                 {...register("imagePath")}
                             />
                             {errors.imagePath && (
@@ -281,7 +315,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                                 type="number"
                                 min={0}
                                 max={999999999}
-                                defaultValue={0}
+                                defaultValue={!props.carData.id ? 0 : props.carData.carValueInDollars}
                             />
                             {errors.carValueInDollars && (
                                 <small id="carValueInDollars-help" className="p-error block">
@@ -300,6 +334,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                                 disabled={loading}
                                 className={errors.extraInformation && "p-invalid"}
                                 {...register("extraInformation")}
+                                defaultValue={!props.carData.id ? "" : props.carData.extraInformation}
                             />
                             {errors.extraInformation && (
                                 <small id="extraInformation-help" className="p-error block">
@@ -321,7 +356,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                                 type="number"
                                 min={0}
                                 max={999999999}
-                                defaultValue={0}
+                                defaultValue={!props.carData.id ? 0 : props.carData.mileage}
                             />
                             {errors.mileage && (
                                 <small id="mileage-help" className="p-error block">
@@ -343,7 +378,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                                 type="number"
                                 min={0}
                                 max={999999999}
-                                defaultValue={0}
+                                defaultValue={!props.carData.id ? 0 : props.carData.rate}
                             />
                             {errors.rate && (
                                 <small id="rate-help" className="p-error block">
@@ -365,7 +400,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                                 type="number"
                                 min={0}
                                 max={999999999}
-                                defaultValue={0}
+                                defaultValue={!props.carData.id ? 0 : props.carData.rentAmountDay}
                             />
                             {errors.rentAmountDay && (
                                 <small id="rentAmountDay-help" className="p-error block">
@@ -387,7 +422,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                                 type="number"
                                 min={0}
                                 max={999999999}
-                                defaultValue={0}
+                                defaultValue={!props.carData.id ? 0 : props.carData.year}
                             />
                             {errors.year && (
                                 <small id="year-help" className="p-error block">
@@ -396,7 +431,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                             )}
                         </div>
 
-                        <div>
+                        {!update && <div>
                             <label htmlFor="licensePlate" className="block mt-3">
                                 Placa
                             </label>
@@ -405,6 +440,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                                 placeholder="Ingrese su dirección"
                                 disabled={loading}
                                 className={errors.licensePlate && "p-invalid"}
+                                defaultValue={!props.carData.id ? "" : props.carData.licensePlate}
                                 {...register("licensePlate")}
                             />
                             {errors.licensePlate && (
@@ -412,33 +448,37 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                                     {errors.licensePlate?.message}
                                 </small>
                             )}
-                        </div>
+                        </div>}
                     </div>
 
                 </div>
-                    {loading ? (
-                        <div className="flex">
-                            <ProgressSpinner
-                                style={{ width: "50px", height: "50px" }}
-                                strokeWidth="4"
-                                className="!mt-6 !mx-auto"
-                            />
-                        </div>
-                    ) : (
-                        <>
-                            <Button
-                                label="Añadir"
-                                className="!mt-6 mb-auto btn-primary"
-                                onClick={handleSubmit(onSubmit)}
-                            />
+                {loading ? (
+                    <div className="flex">
+                        <ProgressSpinner
+                            style={{ width: "50px", height: "50px" }}
+                            strokeWidth="4"
+                            className="!mt-6 !mx-auto"
+                        />
+                    </div>
+                ) : (
+                    <>
+                        {!update ? <Button
+                            label="Añadir"
+                            className="!mt-6 mb-auto btn-primary"
+                            onClick={handleSubmit(onSubmit)}
+                        /> : <Button
+                            label="Editar"
+                            className="!mt-6 mb-auto btn-primary"
+                            onClick={handleSubmit(onUpdate)}
+                        />}
 
-                            <Button
-                                label="Cancelar"
-                                className="!mt-2 mb-auto p-button-outlined btn-secondary"
-                                onClick={() => props.setDisplayAuthForm(!true)}
-                            />
-                        </>
-                    )}
+                        <Button
+                            label="Cancelar"
+                            className="!mt-2 mb-auto p-button-outlined btn-secondary"
+                            onClick={() => props.setDisplayAuthForm(!true)}
+                        />
+                    </>
+                )}
             </form>
         </div>
     );

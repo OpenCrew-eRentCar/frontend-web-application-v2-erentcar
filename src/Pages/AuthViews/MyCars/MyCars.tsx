@@ -10,13 +10,22 @@ import RegisterCarForm from "./Components/RegisterCarForm";
 
 export const MyCars = () => {
   const [loading, setLoading] = useState(true);
-  const [arrayCars, setArrayFavouritesCars] = useState<CarEntity[]>([]);
+  const [arrayCars, setArrayClientCars] = useState<CarEntity[]>([]);
   const [displayAuthForm, setDisplayAuthForm] = useState(false);
   const toastCars = useRef<Toast>(null);
 
   const onClickLoginButton = () => {
     setDisplayAuthForm(true);
   };
+
+  const showToastRegisterSucess = () => {
+    toastCars.current?.show({
+        severity: "success",
+        summary: "Registro",
+        detail: "Registro de carro exitoso",
+        life: 3000,
+    });
+};
 
   const deleteData = async (id: number) => {
     await FavoritesService.delete(id).then(() => {
@@ -33,7 +42,8 @@ export const MyCars = () => {
   const fetchCars = async () => {
     setLoading(true);
     await CarsService.getAllClientCars().then((res: any) => {
-      setArrayFavouritesCars(res.data.content);
+      setArrayClientCars(res.data.content);
+      console.log(res.data.content)
     });
     setLoading(false);
   };
@@ -57,6 +67,7 @@ export const MyCars = () => {
             displayAuthForm={displayAuthForm}
             setDisplayAuthForm={setDisplayAuthForm}
             fetchCars={fetchCars}
+            carData={{}}
           />
         </Dialog>
       </div>
@@ -71,6 +82,7 @@ export const MyCars = () => {
             key={element.id}
             car={element}
             deleteData={deleteData}
+            fetchCars={fetchCars}
           />
         ))
       )}

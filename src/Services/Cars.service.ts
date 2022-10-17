@@ -23,6 +23,14 @@ class CarsService {
   getAllClientCars() {
     return http.get(this.BASE_URL + "/client");
   }
+
+  deleteCar(id: number) {
+    return http.delete(`${this.BASE_URL}/${id}`)
+  }
+
+  updateCar(data: any, id: number) {
+    return http.put(`${this.BASE_URL}/${id}`, data)
+  }
 }
 
 export default new CarsService();
