@@ -18,14 +18,14 @@ export const MyCars = () => {
     setDisplayAuthForm(true);
   };
 
-  const showToastRegisterSucess = () => {
+  /*const showToastRegisterSucess = () => {
     toastCars.current?.show({
         severity: "success",
         summary: "Registro",
         detail: "Registro de carro exitoso",
         life: 3000,
     });
-};
+};*/
 
   const deleteData = async (id: number) => {
     await FavoritesService.delete(id).then(() => {
@@ -43,7 +43,6 @@ export const MyCars = () => {
     setLoading(true);
     await CarsService.getAllClientCars().then((res: any) => {
       setArrayClientCars(res.data.content);
-      console.log(res.data.content)
     });
     setLoading(false);
   };

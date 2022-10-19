@@ -66,8 +66,8 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
     const [loading, setLoading] = useState(false);
     const [loadingCarModels, setLoadingCarModels] = useState(true)
     const [carModels, setCarmodels] = useState<CarModel[]>([])
-    const [carCategory, setCarCategory] = useState(CarCategory)
-    const [mechanicCondition, setMechainCondition] = useState(MechanicConditions)
+    const [carCategory] = useState(CarCategory)
+    const [mechanicCondition] = useState(MechanicConditions)
     const toastRegister = useRef<Toast>(null);
     const {
         register,
@@ -108,7 +108,6 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
         setLoading(true);
         await CarsService.createCar(data)
             .then((res) => {
-                console.log(res)
                 showToastRegisterSucess();
                 props.fetchCars()
                 props.setDisplayAuthForm(false)
@@ -117,7 +116,6 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                 console.log(err)
                 showToastRegisterError();
             })
-        console.log(data)
         setLoading(false);
     };
 
@@ -125,7 +123,6 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
         setLoading(true)
         await CarsService.updateCar(data, props.carData.id)
             .then((res) => {
-                console.log(res)
                 showToastRegisterSucess();
                 props.fetchCars()
                 props.setDisplayAuthForm(false)
@@ -160,6 +157,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
         }
         fetchCarModels()
         register("clientId", { value: JSON.parse(localStorage.getItem("USER") || "").id })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

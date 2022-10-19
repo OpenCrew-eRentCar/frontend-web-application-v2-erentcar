@@ -31,7 +31,6 @@ export default function CartCard(props: Props) {
     const handleDelete = async () => {
         await CarsService.deleteCar(props.car.id)
             .then((res) => {
-                console.log("Eliminado")
                 showToastCancelSuccess()
                 props.fetchCars()
                 setDisplayConfirm(false)
