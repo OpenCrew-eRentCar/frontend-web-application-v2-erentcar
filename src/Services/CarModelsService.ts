@@ -8,4 +8,4 @@ class CarModelsService {
     }
 }
 
-export default new CarModelsService
+export default new CarModelsService();
