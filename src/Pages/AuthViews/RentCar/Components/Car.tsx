@@ -3,6 +3,7 @@ import { Calendar } from "primereact/calendar";
 import { Dialog } from "primereact/dialog";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import FavouriteButton from "../../../../Components/FavouriteButton";
 import CarEntity from "../../../../Models/Car.model";
 import CarsService from "../../../../Services/Cars.service";
 import RentService from "../../../../Services/Rent.service";
@@ -81,10 +82,7 @@ export const Car = () => {
           <div className="grid grid-cols-2 gird-rows-2 lg:flex w-full lg:h-[300px] mb-5 bg-[#F3F1F1] rounded-lg">
             <div className="col-span-1 lg:w-[220px] h-full bg-primary rounded-l-lg flex relative">
               <img alt="car" src={car.imagePath} className="my-auto w-full" />
-              <Button
-                icon="pi pi-heart "
-                className="!absolute !right-0 text-center p-button-rounded p-button-text !text-black !w-[50px] !bg-[#CEE4FF] hover:!bg-cyan-100"
-              />
+              <FavouriteButton carId={car.id} />
             </div>
             <div className="col-span-1 lg:w-[240px] box-border p-3 text-sm">
               <div className="border-b-2 border-[#C4C4C4]">

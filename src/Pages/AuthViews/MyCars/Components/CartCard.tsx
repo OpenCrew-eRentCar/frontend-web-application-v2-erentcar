@@ -8,18 +8,13 @@ type Props = {
 }
 
 export default function CartCard(props: Props) {
-    
+
     return (
         <div className="bg-card-content flex max-w-[400px] md:max-w-[600px] md:max-h-[300px] rounded-[15px] shadow-sm mx-auto mt-[23px]">
             <div className=" md:w-[476px] md:flex border-r-2 border-gray-300 md:border-r-0">
-                <div className="md:w-[220px] bg-card-image rounded-l-[15px] grid content-center">{/*
-                    <div className="hidden md:flex justify-end pr-[16px] pt-[16px] h-[50px]">
-                        <button onClick={() => props.deleteData(props.id)}>
-                            <i className="pi pi-heart-fill" style={{ fontSize: "2em" }}></i>
-                        </button>
-    </div>*/}
+                <div className="md:w-[220px] bg-card-image rounded-l-[15px] flex items-center">
                     <div>
-                        <img src={props.car.imagePath} alt="car"/>
+                        <img src={props.car.imagePath} alt="car" />
                     </div>
                 </div>
                 <div className="md:w-[256px] md:border-r-2 border-gray-300 px-[12px] py-[15px]">
@@ -49,15 +44,15 @@ export default function CartCard(props: Props) {
                     </ul>
                 </div>
             </div>
-            <div className="flex flex-col min-w-[64px] md:min-w-[124px] px-1 md:px-4 py-4">
-                <div>
-                    <Button icon="pi pi-search" className="p-button-rounded p-button-success p-button-outlined" aria-label="Search" />
+            <div className="flex flex-col min-w-[64px] md:min-w-[124px] px-1 md:px-4 py-4 gap-y-1">
+                <div className="bg-white w-fit rounded-full">
+                    <Button icon="pi pi-pencil" className=" p-button-rounded p-button-info p-button-outlined" aria-label="User" />
                 </div>
-                <div className="mt-[8px]">
-                    <Button icon="pi pi-times" className="p-button-rounded p-button-danger p-button-outlined" aria-label="Cancel" />
+                <div className="bg-white w-fit rounded-full">
+                    <Button icon="pi pi-eye" className="p-button-rounded p-button-success p-button-outlined" aria-label="Search" />
                 </div>
-                <div className="mt-[8px]">
-                    <Button icon="pi pi-user" className="p-button-rounded p-button-info p-button-outlined" aria-label="User" />
+                <div className="bg-white w-fit rounded-full">
+                    <Button icon="pi pi-trash" className="p-button-rounded p-button-danger p-button-outlined" aria-label="Cancel" />
                 </div>
                 <div className="mt-[78px] md:mt-[54px]">
                     <h1 className="text-[20px] font-bold">S/. 80</h1>

@@ -114,6 +114,7 @@ export const RegisterForm = (props: RegisterFormProps) => {
     await AuthService.register({ ...data, roles: [Role.USER] })
       .then(async (response) => {
         localStorage.setItem("TOKEN", response.data.resource.token);
+        localStorage.setItem("USER", JSON.stringify(response.data.resource));
         await createClient(data);
         showToastRegisterSucess();
         await new Promise((resolve) => setTimeout(resolve, 2000));

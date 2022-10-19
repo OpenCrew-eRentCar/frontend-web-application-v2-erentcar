@@ -1,4 +1,5 @@
 import CreateClient from "../Models/CreateClient.model";
+import UpdateClient from "../Models/UpdateClient.model";
 import http from "./http-common";
 
 class ClientService {
@@ -6,6 +7,10 @@ class ClientService {
 
   createClient(data: CreateClient) {
     return http.post(this.BASE_URL, data);
+  }
+
+  updateClient(data: UpdateClient) {
+    return http.put(this.BASE_URL, data);
   }
 
   getClientByToken() {

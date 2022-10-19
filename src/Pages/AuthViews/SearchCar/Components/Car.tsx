@@ -2,6 +2,7 @@ import "primeicons/primeicons.css";
 import { Button } from "primereact/button";
 import CarEntity from "../../../../Models/Car.model";
 import { useNavigate } from "react-router-dom";
+import FavouriteButton from "../../../../Components/FavouriteButton";
 
 const gearBoxIcon = require("../../../../Assets/gearbox.png");
 
@@ -16,10 +17,7 @@ export const Car = (props: CarProps) => {
     <div className="grid grid-cols-2 gird-rows-2 lg:flex w-full lg:w-[600px] lg:h-[300px] mb-5 bg-[#F3F1F1] rounded-lg">
       <div className="col-span-1 lg:w-[220px] h-full bg-primary rounded-l-lg flex relative">
         <img alt="car" src={props.car.imagePath} className="my-auto" />
-        <Button
-          icon="pi pi-heart "
-          className="!absolute !right-0 text-center p-button-rounded p-button-text !text-black !w-[50px] !bg-[#CEE4FF] hover:!bg-cyan-100"
-        />
+        <FavouriteButton carId={props.car.id} />
       </div>
       <div className="col-span-1 lg:w-[240px] box-border p-3 text-sm">
         <div className="border-b-2 border-[#C4C4C4]">

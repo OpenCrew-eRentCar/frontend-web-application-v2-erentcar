@@ -11,18 +11,6 @@ export const Favourites = () => {
   );
   const toastFavorite = useRef<Toast>(null);
 
-  const deleteData = async (id: number) => {
-    await FavoritesService.delete(id).then(() => {
-      fetchFavoutiresCars();
-      toastFavorite.current?.show({
-        severity: "error",
-        summary: "DELETED",
-        detail: "Favorite deleted",
-        life: 3000,
-      });
-    });
-  };
-
   const fetchFavoutiresCars = async () => {
     setLoading(true);
     await FavoritesService.get().then((res: any) => {
@@ -48,7 +36,6 @@ export const Favourites = () => {
           <FavoriteCard
             key={element.id}
             favs={element}
-            deleteData={deleteData}
           />
         ))
       )}

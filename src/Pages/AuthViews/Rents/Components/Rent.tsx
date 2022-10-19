@@ -1,7 +1,7 @@
 import RentEntity from "../../../../Models/Rent.model";
-import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { useState } from "react";
+import FavouriteButton from "../../../../Components/FavouriteButton";
 
 const gearBoxIcon = require("../../../../Assets/gearbox.png");
 
@@ -23,10 +23,7 @@ export const Rent = (props: RentProps) => {
           src={props.rent.car.imagePath}
           className="my-auto w-full"
         />
-        <Button
-          icon="pi pi-heart "
-          className="!absolute !right-0 text-center p-button-rounded p-button-text !text-black !w-[50px] !bg-[#CEE4FF] hover:!bg-cyan-100"
-        />
+        <FavouriteButton carId={props.rent.car.id} />
       </div>
       <div className="col-span-1 lg:w-[240px] box-border p-3 text-sm">
         <div className="border-b-2 border-[#C4C4C4]">

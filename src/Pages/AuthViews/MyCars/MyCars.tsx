@@ -5,11 +5,18 @@ import { useEffect, useRef, useState } from "react";
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
 import CarEntity from "../../../Models/Car.model";
+import { Dialog } from "primereact/dialog";
+import RegisterCarForm from "./Components/RegisterCarForm";
 
 export const MyCars = () => {
   const [loading, setLoading] = useState(true);
   const [arrayCars, setArrayFavouritesCars] = useState<CarEntity[]>([]);
+  const [displayAuthForm, setDisplayAuthForm] = useState(false);
   const toastCars = useRef<Toast>(null);
+
+  const onClickLoginButton = () => {
+    setDisplayAuthForm(true);
+  };
 
   const deleteData = async (id: number) => {
     await FavoritesService.delete(id).then(() => {
@@ -25,7 +32,7 @@ export const MyCars = () => {
 
   const fetchCars = async () => {
     setLoading(true);
-    await CarsService.getAll().then((res: any) => {
+    await CarsService.getAllClientCars().then((res: any) => {
       setArrayFavouritesCars(res.data.content);
     });
     setLoading(false);
@@ -33,7 +40,7 @@ export const MyCars = () => {
 
   useEffect(() => {
     fetchCars();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -41,9 +48,17 @@ export const MyCars = () => {
       <Toast ref={toastCars} position="bottom-right" />
       <div className="max-w-[160px] mx-auto">
         <Button
+        onClick={onClickLoginButton}
           label="Añadir nuevo auto"
           className="!ml-auto btn-primary p-button-sm"
         />
+        <Dialog visible={displayAuthForm} onHide={() => setDisplayAuthForm(false)}>
+          <RegisterCarForm
+            displayAuthForm={displayAuthForm}
+            setDisplayAuthForm={setDisplayAuthForm}
+            fetchCars={fetchCars}
+          />
+        </Dialog>
       </div>
 
       {loading ? (
