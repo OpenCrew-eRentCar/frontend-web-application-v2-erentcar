@@ -61,6 +61,7 @@ export const Header = (props: HeaderProps) => {
 
       <Menu model={items} popup ref={menu} id="popup_user_menu" />
       <Button
+        id="popup_user_menu"
         label={clientNames}
         className="btn-secondary p-button-outlined"
         onClick={(e) => menu.current?.toggle(e)}
