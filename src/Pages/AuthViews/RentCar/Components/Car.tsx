@@ -7,8 +7,20 @@ import FavouriteButton from "../../../../Components/FavouriteButton";
 import CarEntity from "../../../../Models/Car.model";
 import CarsService from "../../../../Services/Cars.service";
 import RentService from "../../../../Services/Rent.service";
+import {
+  Appearance,
+  loadStripe,
+  StripeElementsOptions,
+} from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import PaymentsService from "../../../../Services/Payments.service";
+import CheckoutForm from "../../../../Components/CheckoutForm";
 
 const gearBoxIcon = require("../../../../Assets/gearbox.png");
+
+const stripePromise = loadStripe(
+  "pk_test_51LxdH4I2LYtxNEDrHbqCWt1xkA17y0sWMiL8qZH5ftucNieV6vW2GLUMHzfKe0hwnrKzhILBDmzxWF78Z31O6ENV002PdpT2Jd"
+);
 
 export const Car = () => {
   const [loading, setLoading] = useState(true);
@@ -17,6 +29,7 @@ export const Car = () => {
   const [car, setCar] = useState({} as CarEntity);
   const [displayRentSuccessDialog, setDisplayRentSuccessDialog] =
     useState(false);
+  const [clientSecret, setClientSecret] = useState<string>("");
 
   const { carId } = useParams();
   const navigate = useNavigate();
@@ -49,6 +62,18 @@ export const Car = () => {
       });
   };
 
+  const createPaymentIntent = async () => {
+    await PaymentsService.createPaymentIntent({
+      amount: days * car.rentAmountDay,
+    })
+      .then((response) => {
+        setClientSecret(response.data.clientSecret);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const onChangeCalendar = (e: any) => {
     setDates(e.value);
 
@@ -70,8 +95,24 @@ export const Car = () => {
 
   useEffect(() => {
     fetchCar();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [carId]);
+
+  useEffect(() => {
+    createPaymentIntent();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [car, dates]);
+
+  // STRIPE
+  const appearance: Appearance = {
+    theme: "stripe",
+  };
+
+  let options: StripeElementsOptions = {
+    clientSecret,
+    appearance,
+  };
+  // END STRIPE
 
   return (
     <>
@@ -144,14 +185,12 @@ export const Car = () => {
               </div>
             </div>
           </div>
-          <div className="flex mt-5">
-            <Button
-              className="btn-primary !mx-auto"
-              onClick={() => createRent()}
-            >
-              Rentar
-            </Button>
-          </div>
+
+          {clientSecret && (
+            <Elements options={options} stripe={stripePromise}>
+              <CheckoutForm createRent={() => createRent()} />
+            </Elements>
+          )}
 
           <Dialog
             visible={displayRentSuccessDialog}
