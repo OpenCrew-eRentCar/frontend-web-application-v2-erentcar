@@ -1,35 +1,18 @@
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
-import { Dialog } from "primereact/dialog";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import FavouriteButton from "../../../../Components/FavouriteButton";
 import CarEntity from "../../../../Models/Car.model";
 import CarsService from "../../../../Services/Cars.service";
-import RentService from "../../../../Services/Rent.service";
-import {
-  Appearance,
-  loadStripe,
-  StripeElementsOptions,
-} from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
-import PaymentsService from "../../../../Services/Payments.service";
-import CheckoutForm from "../../../../Components/CheckoutForm";
 
 const gearBoxIcon = require("../../../../Assets/gearbox.png");
-
-const stripePromise = loadStripe(
-  "pk_test_51LxdH4I2LYtxNEDrHbqCWt1xkA17y0sWMiL8qZH5ftucNieV6vW2GLUMHzfKe0hwnrKzhILBDmzxWF78Z31O6ENV002PdpT2Jd"
-);
 
 export const Car = () => {
   const [loading, setLoading] = useState(true);
   const [dates, setDates] = useState<Date[]>([new Date(), new Date()]);
   const [days, setDays] = useState(1);
   const [car, setCar] = useState({} as CarEntity);
-  const [displayRentSuccessDialog, setDisplayRentSuccessDialog] =
-    useState(false);
-  const [clientSecret, setClientSecret] = useState<string>("");
 
   const { carId } = useParams();
   const navigate = useNavigate();
@@ -44,34 +27,6 @@ export const Car = () => {
         console.log(error);
       });
     setLoading(false);
-  };
-
-  const createRent = async () => {
-    await RentService.createRent({
-      carId: car.id,
-      amount: days * car.rentAmountDay,
-      rate: 0,
-      startDate: dates[0],
-      finishDate: dates[1],
-    })
-      .then((response) => {
-        setDisplayRentSuccessDialog(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const createPaymentIntent = async () => {
-    await PaymentsService.createPaymentIntent({
-      amount: days * car.rentAmountDay,
-    })
-      .then((response) => {
-        setClientSecret(response.data.clientSecret);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   const onChangeCalendar = (e: any) => {
@@ -95,24 +50,8 @@ export const Car = () => {
 
   useEffect(() => {
     fetchCar();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [carId]);
-
-  useEffect(() => {
-    createPaymentIntent();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [car, dates]);
-
-  // STRIPE
-  const appearance: Appearance = {
-    theme: "stripe",
-  };
-
-  let options: StripeElementsOptions = {
-    clientSecret,
-    appearance,
-  };
-  // END STRIPE
 
   return (
     <>
@@ -186,31 +125,22 @@ export const Car = () => {
             </div>
           </div>
 
-          {clientSecret && (
-            <Elements options={options} stripe={stripePromise}>
-              <CheckoutForm createRent={() => createRent()} />
-            </Elements>
-          )}
-
-          <Dialog
-            visible={displayRentSuccessDialog}
-            onHide={() => navigate("/auth")}
-          >
-            <h1 className="text-xl font-bold text-center">Muchas gracias</h1>
-            <p className="my-5">Gracias por confiar en nuestro servicio.</p>
-            <div className="flex flex-col">
-              <Button
-                label="Ver renta"
-                className="btn-primary"
-                onClick={() => navigate("/auth/rents")}
-              />
-              <Button
-                label="Volver a la sección principal"
-                className="p-button-outlined btn-secondary !mt-3"
-                onClick={() => navigate("/auth")}
-              />
-            </div>
-          </Dialog>
+          <div className="flex">
+            <Button
+              label="Rentar"
+              className="btn-primary !mx-auto"
+              onClick={() =>
+                navigate(
+                  "pay-rent?totalAmount=" +
+                    days * car.rentAmountDay +
+                    "&startDate=" +
+                    dates[0] +
+                    "&finishDate=" +
+                    dates[1]
+                )
+              }
+            />
+          </div>
         </div>
       )}
     </>
