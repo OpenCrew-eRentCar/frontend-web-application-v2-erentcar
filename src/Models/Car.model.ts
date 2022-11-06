@@ -1,6 +1,7 @@
 import CarModel from "./CarModel.model";
 import { CarCategory } from "./CarCategory.enum";
 import { MechanicConditions } from "./MechanicConditions.enum";
+import Comment from "./Comment";
 
 export default interface CarEntity {
   id: number;
@@ -18,5 +19,6 @@ export default interface CarEntity {
   rentAmountDay: number;
   seating: number;
   year: number;
+  comments: Comment[];
   clientId: number;
 }
