@@ -81,7 +81,7 @@ export const Car = () => {
         <div>
           <div className="grid grid-cols-2 gird-rows-2 lg:flex w-full lg:h-[300px] mb-5 bg-[#F3F1F1] rounded-lg">
             <div className="col-span-1 lg:w-[220px] h-full bg-primary rounded-l-lg flex relative">
-              <img alt="car" src={car.imagePath} className="my-auto w-full" />
+              {/* <img alt="car" src={car.imagePath} className="my-auto w-full" /> */}
               <FavouriteButton carId={car.id} />
             </div>
             <div className="col-span-1 lg:w-[240px] box-border p-3 text-sm">

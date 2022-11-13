@@ -14,7 +14,7 @@ function FavoriteCard(props: Props) {
     <div className="bg-card-content flex max-w-[400px] md:max-w-[600px] md:h-[300px] rounded-[15px] shadow-sm mx-auto mt-[35px]">
       <div className=" md:w-[476px] md:flex border-r-2 border-gray-300 md:border-r-0">
         <div className="lg:w-[220px] bg-primary rounded-l-lg flex relative">
-          <img alt="car" src={props.favs.car.imagePath} className="my-auto" />
+          {/* <img alt="car" src={props.favs.car.imagePath} className="my-auto" /> */}
           <FavouriteButton carId={props.favs.car.id} />
         </div>
         <div className="md:w-[256px] md:border-r-2 border-gray-300 px-[12px] py-[15px]">

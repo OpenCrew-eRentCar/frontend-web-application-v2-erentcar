@@ -1,3 +1,4 @@
+import { Carousel } from "primereact";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
@@ -40,13 +41,24 @@ export default function CartCard(props: Props) {
             })
     }
 
+    const imageCarouselTemplate = (product: String) => {
+        return (
+            <div className="h-full">
+                <img src={`${product}`} alt={`${product}`} className="h-[150px] w-[320px] md:w-[240px]" />
+            </div>
+        );
+    }
+
+    //console.log(props.car)
+
     return (
         <div className="bg-card-content flex max-w-[400px] md:max-w-[600px] md:max-h-[300px] rounded-[15px] shadow-sm mx-auto mt-[23px]">
             <Toast ref={toastDelete} position="bottom-right" />
             <div className=" md:w-[476px] md:flex border-r-2 border-gray-300 md:border-r-0">
-                <div className="md:w-[220px] bg-card-image rounded-l-[15px] flex items-center">
-                    <div>
-                        <img src={props.car.imagePath} alt="car" />
+                <div className="min-h-[290px] md:w-[240px] bg-card-image rounded-l-[15px] flex items-center">
+                    <div className="flex items-center max-h-6">
+                        <Carousel value={props.car.imagePath} numVisible={1} numScroll={1} orientation="vertical" verticalViewPortHeight="160px"
+                            itemTemplate={imageCarouselTemplate}/>
                     </div>
                 </div>
                 <div className="md:w-[256px] md:border-r-2 border-gray-300 px-[12px] py-[15px]">
@@ -80,7 +92,7 @@ export default function CartCard(props: Props) {
                 <div className="bg-white w-fit rounded-full">
                     <Button onClick={() => setDisplayEditForm(true)} icon="pi pi-pencil" className=" p-button-rounded p-button-info p-button-outlined" aria-label="User" />
                     <Dialog visible={displayEditForm} onHide={() => setDisplayEditForm(false)}>
-                        <RegisterCarForm displayAuthForm={displayEditForm} setDisplayAuthForm={setDisplayEditForm} fetchCars={props.fetchCars} carData={props.car}/>
+                        <RegisterCarForm displayAuthForm={displayEditForm} setDisplayAuthForm={setDisplayEditForm} fetchCars={props.fetchCars} carData={props.car} />
                     </Dialog>
                 </div>
                 <div className="bg-white w-fit rounded-full">
@@ -89,7 +101,7 @@ export default function CartCard(props: Props) {
                 <div className="bg-white w-fit rounded-full">
                     <Button onClick={() => setDisplayConfirm(true)} icon="pi pi-trash" className="p-button-rounded p-button-danger p-button-outlined" aria-label="Cancel" />
                     <Dialog visible={displayConfirm} onHide={() => setDisplayConfirm(false)}>
-                        <ConfirmDeleteDialog handleDelete={handleDelete} setDisplayConfirm={setDisplayConfirm}/>
+                        <ConfirmDeleteDialog handleDelete={handleDelete} setDisplayConfirm={setDisplayConfirm} />
                     </Dialog>
                 </div>
                 <div className="mt-[78px] md:mt-[54px]">
