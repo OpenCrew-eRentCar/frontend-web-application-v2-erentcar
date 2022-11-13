@@ -2,6 +2,7 @@ import { Button } from "primereact/button";
 import FavouriteButton from "../../../../Components/FavouriteButton";
 import Favourite from "../../../../Models/Favourite.model";
 import { useNavigate } from "react-router-dom";
+import { Carousel } from "primereact";
 
 type Props = {
   favs: Favourite;
@@ -10,11 +11,20 @@ type Props = {
 function FavoriteCard(props: Props) {
   const navigate = useNavigate();
 
+  const imageCarouselTemplate = (product: String) => {
+    return (
+      <div className="h-full">
+        <img src={`${product}`} alt={`${product}`} className="h-[150px] w-[320px] md:w-[240px]" />
+      </div>
+    );
+  }
+
   return (
     <div className="bg-card-content flex max-w-[400px] md:max-w-[600px] md:h-[300px] rounded-[15px] shadow-sm mx-auto mt-[35px]">
       <div className=" md:w-[476px] md:flex border-r-2 border-gray-300 md:border-r-0">
         <div className="lg:w-[220px] bg-primary rounded-l-lg flex relative">
-          <img alt="car" src={props.favs.car.imagePath} className="my-auto" />
+          <Carousel value={props.favs.car.imagePath} numVisible={1} numScroll={1} orientation="vertical" verticalViewPortHeight="160px"
+            itemTemplate={imageCarouselTemplate} />
           <FavouriteButton carId={props.favs.car.id} />
         </div>
         <div className="md:w-[256px] md:border-r-2 border-gray-300 px-[12px] py-[15px]">

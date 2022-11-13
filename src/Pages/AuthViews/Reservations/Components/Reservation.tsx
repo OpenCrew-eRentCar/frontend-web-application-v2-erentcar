@@ -1,7 +1,8 @@
 import RentEntity from "../../../../Models/Rent.model";
-import {useState} from "react";
-import {Button} from "primereact/button";
-import {Calendar} from "primereact/calendar";
+import { useState } from "react";
+import { Button } from "primereact/button";
+import { Calendar } from "primereact/calendar";
+import { Carousel } from "primereact";
 
 const gearBoxIcon = require("../../../../Assets/gearbox.png");
 
@@ -19,14 +20,19 @@ export const Reservation = (props: RentProps) => {
 
     }
 
+    const imageCarouselTemplate = (product: String) => {
+        return (
+            <div className="h-full">
+                <img src={`${product}`} alt={`${product}`} className="h-[150px] w-[320px] md:w-[240px]" />
+            </div>
+        );
+    }
+
     return (
         <div className="grid grid-cols-2 gird-rows-2 lg:flex w-full lg:h-[300px] mb-5 bg-[#F3F1F1] rounded-lg">
             <div className="col-span-1 lg:w-[220px] h-full bg-primary rounded-l-lg flex relative">
-                <img
-                    alt="car"
-                    src={props.rent.car.imagePath}
-                    className="my-auto w-full"
-                />
+                <Carousel value={props.rent.car.imagePath} numVisible={1} numScroll={1} orientation="vertical" verticalViewPortHeight="160px"
+                    itemTemplate={imageCarouselTemplate} />
                 <Button
                     icon="pi pi-heart "
                     className="!absolute !right-0 text-center p-button-rounded p-button-text !text-black !w-[50px] !bg-[#CEE4FF] hover:!bg-cyan-100"
@@ -39,22 +45,22 @@ export const Reservation = (props: RentProps) => {
                         {props.rent.car.carModel.name}
                     </h1>
                     <div className="my-3">
-            <span className="mr-5">
-              <i className="pi pi-user mr-3"/>
-              <span>{props.rent.car.seating}</span>
-            </span>
+                        <span className="mr-5">
+                            <i className="pi pi-user mr-3" />
+                            <span>{props.rent.car.seating}</span>
+                        </span>
                         <span>
-              <img
-                  alt="gearbox"
-                  src={gearBoxIcon}
-                  className="w-[16px] h-[16px] my-auto mr-3 inline"
-              />
-              <span>{props.rent.car.manual ? "M" : "A"}</span>
-            </span>
+                            <img
+                                alt="gearbox"
+                                src={gearBoxIcon}
+                                className="w-[16px] h-[16px] my-auto mr-3 inline"
+                            />
+                            <span>{props.rent.car.manual ? "M" : "A"}</span>
+                        </span>
                     </div>
                 </div>
                 <div className="border-b-2 border-[#C4C4C4] py-3 mb-3">
-                    <i className="pi pi-map"/>
+                    <i className="pi pi-map" />
                     <span className="ml-2">{props.rent.car.address}</span>
                 </div>
                 <ul className="list-disc pl-5 text-sm">
@@ -66,13 +72,13 @@ export const Reservation = (props: RentProps) => {
                 <div className="flex justify-between items-center">
                     <h1 className="text-xl">Detalles de la renta</h1>
                     <Button onClick={() => changeRentStatus()} icon="pi pi-pencil"
-                            className="p-button-rounded p-button-info p-button-outlined" aria-label="Search"/>
+                        className="p-button-rounded p-button-info p-button-outlined" aria-label="Search" />
                 </div>
                 <div className="flex mt-4">
                     <span>Tarifa por día</span>
                     <span className="ml-auto text-xl">
-            S/ {props.rent.car.rentAmountDay}
-          </span>
+                        S/ {props.rent.car.rentAmountDay}
+                    </span>
                 </div>
                 <div className="flex mt-4">
                     <span>Rango de fechas</span>

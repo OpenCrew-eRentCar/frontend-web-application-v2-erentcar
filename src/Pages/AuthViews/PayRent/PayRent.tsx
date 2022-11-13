@@ -4,6 +4,7 @@ import {
   loadStripe,
   StripeElementsOptions,
 } from "@stripe/stripe-js";
+import { Carousel } from "primereact";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { Dialog } from "primereact/dialog";
@@ -118,6 +119,14 @@ export const PayRent = () => {
   };
   // END STRIPE
 
+  const imageCarouselTemplate = (product: String) => {
+    return (
+      <div className="h-full">
+        <img src={`${product}`} alt={`${product}`} className="h-[150px] w-[320px] md:w-[240px]" />
+      </div>
+    );
+  }
+
   return (
     <>
       {loading ? (
@@ -136,11 +145,8 @@ export const PayRent = () => {
           <div className="flex">
             <div className="flex flex-col w-full max-w-[380px] bg-[#F3F1F1] rounded-lg mr-auto">
               <div className="lg:w-[380px] h-full bg-primary rounded-t-lg flex relative">
-                <img
-                  alt="car"
-                  src={car.imagePath}
-                  className="my-auto w-full rounded-t-lg"
-                />
+                <Carousel value={car.imagePath} numVisible={1} numScroll={1} orientation="vertical" verticalViewPortHeight="160px"
+                  itemTemplate={imageCarouselTemplate} />
                 <FavouriteButton carId={car.id} />
               </div>
               <div className="lg:w-[380px] h-full border-box p-3 rounded-b-lg flex flex-col relative">

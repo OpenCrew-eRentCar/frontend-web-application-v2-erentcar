@@ -1,3 +1,4 @@
+import { Carousel } from "primereact";
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router";
 import CarEntity from "../../../../Models/Car.model";
@@ -10,17 +11,26 @@ interface CarProps {
 const Car = (props: CarProps) => {
   const navigate = useNavigate();
 
+  const imageCarouselTemplate = (product: String) => {
+    return (
+      <div className="h-full">
+        <img src={`${product}`} alt={`${product}`} className="h-[150px] w-[320px] md:w-[240px]" />
+      </div>
+    );
+  }
+
   return (
     <div className="w-[240px] mb-5 mx-auto">
       <div className="flex h-[270px] bg-[#D0EFFF] rounded-md">
-        <img alt="car" src={props.car.imagePath} className="m-auto" />
+        <Carousel value={props.car.imagePath} numVisible={1} numScroll={1} orientation="vertical" verticalViewPortHeight="160px"
+          itemTemplate={imageCarouselTemplate} />
       </div>
       <h1 className="font-bold my-2">
         {props.car.carModel.carBrand.name} {props.car.carModel.name}
       </h1>
       <div className="flex">
         <p className="my-auto">S/ {props.car.rentAmountDay}</p>
-        <Button label="Ver detalles" className="!ml-auto btn-primary" onClick={() => navigate("/auth/my-cars")}/>
+        <Button label="Ver detalles" className="!ml-auto btn-primary" onClick={() => navigate("/auth/my-cars")} />
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import { Carousel } from "primereact";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { useEffect, useState } from "react";
@@ -53,6 +54,14 @@ export const Car = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [carId]);
 
+  const imageCarouselTemplate = (product: String) => {
+    return (
+      <div className="h-full">
+        <img src={`${product}`} alt={`${product}`} className="h-[150px] w-[320px] md:w-[240px]" />
+      </div>
+    );
+  }
+
   return (
     <>
       {loading ? (
@@ -61,7 +70,8 @@ export const Car = () => {
         <div>
           <div className="grid grid-cols-2 gird-rows-2 lg:flex w-full lg:h-[300px] mb-5 bg-[#F3F1F1] rounded-lg">
             <div className="col-span-1 lg:w-[220px] h-full bg-primary rounded-l-lg flex relative">
-              <img alt="car" src={car.imagePath} className="my-auto w-full" />
+              <Carousel value={car.imagePath} numVisible={1} numScroll={1} orientation="vertical" verticalViewPortHeight="160px"
+                itemTemplate={imageCarouselTemplate} />
               <FavouriteButton carId={car.id} />
             </div>
             <div className="col-span-1 lg:w-[240px] box-border p-3 text-sm">
@@ -132,11 +142,11 @@ export const Car = () => {
               onClick={() =>
                 navigate(
                   "pay-rent?totalAmount=" +
-                    days * car.rentAmountDay +
-                    "&startDate=" +
-                    dates[0] +
-                    "&finishDate=" +
-                    dates[1]
+                  days * car.rentAmountDay +
+                  "&startDate=" +
+                  dates[0] +
+                  "&finishDate=" +
+                  dates[1]
                 )
               }
             />

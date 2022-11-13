@@ -10,7 +10,7 @@ export default interface CarEntity {
   carValueInDollars: number;
   category: CarCategory;
   extraInformation: string;
-  imagePath: string;
+  imagePath: Array<string>;
   manual: boolean;
   mechanicConditions: MechanicConditions;
   mileage: number;

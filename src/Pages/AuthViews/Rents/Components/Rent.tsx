@@ -2,6 +2,7 @@ import RentEntity from "../../../../Models/Rent.model";
 import { Calendar } from "primereact/calendar";
 import { useState } from "react";
 import FavouriteButton from "../../../../Components/FavouriteButton";
+import { Carousel } from "primereact";
 
 const gearBoxIcon = require("../../../../Assets/gearbox.png");
 
@@ -15,14 +16,19 @@ export const Rent = (props: RentProps) => {
     new Date(props.rent.finishDate),
   ]);
 
+  const imageCarouselTemplate = (product: String) => {
+    return (
+      <div className="h-full">
+        <img src={`${product}`} alt={`${product}`} className="h-[150px] w-[320px] md:w-[240px]" />
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-2 gird-rows-2 lg:flex w-full lg:h-[300px] mb-5 bg-[#F3F1F1] rounded-lg">
       <div className="col-span-1 lg:w-[220px] h-full bg-primary rounded-l-lg flex relative">
-        <img
-          alt="car"
-          src={props.rent.car.imagePath}
-          className="my-auto w-full"
-        />
+        <Carousel value={props.rent.car.imagePath} numVisible={1} numScroll={1} orientation="vertical" verticalViewPortHeight="160px"
+          itemTemplate={imageCarouselTemplate} />
         <FavouriteButton carId={props.rent.car.id} />
       </div>
       <div className="col-span-1 lg:w-[240px] box-border p-3 text-sm">
