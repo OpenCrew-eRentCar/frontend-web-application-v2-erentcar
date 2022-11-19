@@ -1,33 +1,21 @@
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FavouriteButton from "../../../../Components/FavouriteButton";
 import CarEntity from "../../../../Models/Car.model";
-import CarsService from "../../../../Services/Cars.service";
 
 const gearBoxIcon = require("../../../../Assets/gearbox.png");
 
-export const Car = () => {
-  const [loading, setLoading] = useState(true);
+interface CarProps {
+  loading: boolean;
+  car: CarEntity;
+}
+
+export const Car = (props: CarProps) => {
   const [dates, setDates] = useState<Date[]>([new Date(), new Date()]);
   const [days, setDays] = useState(1);
-  const [car, setCar] = useState({} as CarEntity);
-
-  const { carId } = useParams();
   const navigate = useNavigate();
-
-  const fetchCar = async () => {
-    setLoading(true);
-    await CarsService.getCarById((carId || 0) as number)
-      .then((response) => {
-        setCar(response.data as CarEntity);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setLoading(false);
-  };
 
   const onChangeCalendar = (e: any) => {
     setDates(e.value);
@@ -48,31 +36,26 @@ export const Car = () => {
     }
   };
 
-  useEffect(() => {
-    fetchCar();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [carId]);
-
   return (
     <>
-      {loading ? (
+      {props.loading ? (
         <>Loading...</>
       ) : (
-        <div>
+        <div className="mt-5">
           <div className="grid grid-cols-2 gird-rows-2 lg:flex w-full lg:h-[300px] mb-5 bg-[#F3F1F1] rounded-lg">
             <div className="col-span-1 lg:w-[220px] h-full bg-primary rounded-l-lg flex relative">
               <img alt="car" src={car.imagePath[0]} className="my-auto w-full" />
-              <FavouriteButton carId={car.id} />
+              <FavouriteButton carId={props.car.id} />
             </div>
             <div className="col-span-1 lg:w-[240px] box-border p-3 text-sm">
               <div className="border-b-2 border-[#C4C4C4]">
                 <h1 className="font-bold text-xl">
-                  {car.carModel.carBrand.name} {car.carModel.name}
+                  {props.car.carModel.carBrand.name} {props.car.carModel.name}
                 </h1>
                 <div className="my-3">
                   <span className="mr-5">
                     <i className="pi pi-user mr-3" />
-                    <span>{car.seating}</span>
+                    <span>{props.car.seating}</span>
                   </span>
                   <span>
                     <img
@@ -80,13 +63,13 @@ export const Car = () => {
                       src={gearBoxIcon}
                       className="w-[16px] h-[16px] my-auto mr-3 inline"
                     />
-                    <span>{car.manual ? "M" : "A"}</span>
+                    <span>{props.car.manual ? "M" : "A"}</span>
                   </span>
                 </div>
               </div>
               <div className="border-b-2 border-[#C4C4C4] py-3 mb-3">
                 <i className="pi pi-map" />
-                <span className="ml-2">{car.address}</span>
+                <span className="ml-2">{props.car.address}</span>
               </div>
               <div className="grid grid-cols-2">
                 <ul className="!list-disc pl-5 text-sm">
@@ -102,7 +85,9 @@ export const Car = () => {
               <h1 className="text-xl">Detalles del precio</h1>
               <div className="flex mt-4">
                 <span>Tarifa por día</span>
-                <span className="ml-auto text-xl">S/ {car.rentAmountDay}</span>
+                <span className="ml-auto text-xl">
+                  S/ {props.car.rentAmountDay}
+                </span>
               </div>
               <div className="flex mt-4">
                 <span>Rango de fechas</span>
@@ -119,7 +104,7 @@ export const Car = () => {
               <div className="flex mt-4 pt-4 border-t-2 border-[#C4C4C4]">
                 <span>Total a pagar</span>
                 <span className="ml-auto text-xl">
-                  S/ {days * car.rentAmountDay}
+                  S/ {days * props.car.rentAmountDay}
                 </span>
               </div>
             </div>
@@ -132,7 +117,7 @@ export const Car = () => {
               onClick={() =>
                 navigate(
                   "pay-rent?totalAmount=" +
-                    days * car.rentAmountDay +
+                    days * props.car.rentAmountDay +
                     "&startDate=" +
                     dates[0] +
                     "&finishDate=" +
