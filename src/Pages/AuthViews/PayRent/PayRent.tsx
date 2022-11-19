@@ -136,11 +136,11 @@ export const PayRent = () => {
           <div className="flex">
             <div className="flex flex-col w-full max-w-[380px] bg-[#F3F1F1] rounded-lg mr-auto">
               <div className="lg:w-[380px] h-full bg-primary rounded-t-lg flex relative">
-                {/* <img
+                <img
                   alt="car"
-                  src={car.imagePath}
+                  src={car.imagePath[0]}
                   className="my-auto w-full rounded-t-lg"
-                /> */}
+                />
                 <FavouriteButton carId={car.id} />
               </div>
               <div className="lg:w-[380px] h-full border-box p-3 rounded-b-lg flex flex-col relative">
