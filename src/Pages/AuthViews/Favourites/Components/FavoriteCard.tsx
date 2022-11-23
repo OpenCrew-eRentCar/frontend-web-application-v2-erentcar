@@ -13,7 +13,7 @@ function FavoriteCard(props: Props) {
   return (
     <div className="bg-card-content flex max-w-[400px] md:max-w-[600px] md:h-[300px] rounded-[15px] shadow-sm mx-auto mt-[35px]">
       <div className=" md:w-[476px] md:flex border-r-2 border-gray-300 md:border-r-0">
-        <div className="lg:w-[220px] bg-primary rounded-l-lg flex relative">
+        <div className="max-w-[280px] md:w-[220px] bg-primary rounded-l-lg flex relative">
           <img alt="car" src={props.favs.car.imagePath[0]} className="my-auto" />
           <FavouriteButton carId={props.favs.car.id} />
         </div>
@@ -49,6 +49,10 @@ function FavoriteCard(props: Props) {
           S/ {props.favs.car.rentAmountDay}
         </p>
         <p className="ml-0 my-2">Por día</p>
+        <p className="text-xl font-bold my-auto ml-0 my-0 mt-auto">
+          S/ {props.favs.car.rentAmountKilometer}
+        </p>
+        <p className="ml-0 my-2">Por kilometro</p>
         <Button
           label="Ver oferta"
           className="w-full !ml-0 !text-sm btn-primary"

@@ -132,7 +132,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
             "licensePlate": data.licensePlate,
             "insuranceType": data.insuranceType,
         }
-        console.log(formData)
+
         setLoading(true);
         await CarsService.createCar(formData)
             .then((res) => {
@@ -317,6 +317,47 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                                 </small>
                             )}
                         </div>
+
+                        <div>
+                            <label htmlFor="year" className="block mt-3">
+                                Año
+                            </label>
+                            <InputText
+                                id="year"
+                                placeholder="Ingrese Año del Carro"
+                                disabled={loading}
+                                className={errors.year && "p-invalid"}
+                                {...register("year")}
+                                type="number"
+                                min={0}
+                                max={999999999}
+                                defaultValue={!props.carData.id ? 0 : props.carData.year}
+                            />
+                            {errors.year && (
+                                <small id="year-help" className="p-error block">
+                                    {errors.year?.message}
+                                </small>
+                            )}
+                        </div>
+
+                        {!update && <div>
+                            <label htmlFor="licensePlate" className="block mt-3">
+                                Placa
+                            </label>
+                            <InputText
+                                id="licensePlate"
+                                placeholder="Ingrese su dirección"
+                                disabled={loading}
+                                className={errors.licensePlate && "p-invalid"}
+                                defaultValue={!props.carData.id ? "" : props.carData.licensePlate}
+                                {...register("licensePlate")}
+                            />
+                            {errors.licensePlate && (
+                                <small id="licensePlate-help" className="p-error block">
+                                    {errors.licensePlate?.message}
+                                </small>
+                            )}
+                        </div>}
                     </div>
 
                     <div className="w-[330px] sm:w-full lg:w-[352px] lg:ml-3">
@@ -482,46 +523,6 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                             )}
                         </div>
 
-                        <div>
-                            <label htmlFor="year" className="block mt-3">
-                                Año
-                            </label>
-                            <InputText
-                                id="year"
-                                placeholder="Ingrese Año del Carro"
-                                disabled={loading}
-                                className={errors.year && "p-invalid"}
-                                {...register("year")}
-                                type="number"
-                                min={0}
-                                max={999999999}
-                                defaultValue={!props.carData.id ? 0 : props.carData.year}
-                            />
-                            {errors.year && (
-                                <small id="year-help" className="p-error block">
-                                    {errors.year?.message}
-                                </small>
-                            )}
-                        </div>
-
-                        {!update && <div>
-                            <label htmlFor="licensePlate" className="block mt-3">
-                                Placa
-                            </label>
-                            <InputText
-                                id="licensePlate"
-                                placeholder="Ingrese su dirección"
-                                disabled={loading}
-                                className={errors.licensePlate && "p-invalid"}
-                                defaultValue={!props.carData.id ? "" : props.carData.licensePlate}
-                                {...register("licensePlate")}
-                            />
-                            {errors.licensePlate && (
-                                <small id="licensePlate-help" className="p-error block">
-                                    {errors.licensePlate?.message}
-                                </small>
-                            )}
-                        </div>}
                     </div>
 
                 </div>
