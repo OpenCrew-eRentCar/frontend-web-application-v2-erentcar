@@ -36,9 +36,17 @@ export const PayRent = () => {
   const { carId } = useParams();
 
   const createRent = async () => {
+    const amount =
+      searchParams.get("rentPerDay") === "true"
+        ? days * car.rentAmountDay
+        : parseInt(searchParams.get("kilometers") || "0") *
+          car.rentAmountKilometer;
+
     await RentService.createRent({
       carId: car.id,
-      amount: days * car.rentAmountDay,
+      amount: amount,
+      rentPerDay: searchParams.get("rentPerDay") === "true",
+      kilometers: parseInt(searchParams.get("kilometers") || "0"),
       rate: 0,
       startDate: dates[0],
       finishDate: dates[1],
@@ -178,6 +186,13 @@ export const PayRent = () => {
                   <div className="flex mt-3">
                     <span>Total a pagar</span>
                     <span className="ml-auto text-xl">S/ {totalAmount}</span>
+                  </div>
+                  <div className="flex mt-3 font-normal">
+                    <span className="ml-auto">
+                      {searchParams.get("rentPerDay") === "true"
+                        ? "Renta por día"
+                        : "Renta por kilometros"}
+                    </span>
                   </div>
                 </div>
               </div>

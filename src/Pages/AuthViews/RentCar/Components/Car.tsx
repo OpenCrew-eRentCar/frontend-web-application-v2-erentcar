@@ -1,3 +1,4 @@
+import { InputNumber, InputSwitch } from "primereact";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { useState } from "react";
@@ -15,6 +16,8 @@ interface CarProps {
 export const Car = (props: CarProps) => {
   const [dates, setDates] = useState<Date[]>([new Date(), new Date()]);
   const [days, setDays] = useState(1);
+  const [rentPerDay, setRentPerDay] = useState(true);
+  const [kilometers, setKilometers] = useState<number>(1);
   const navigate = useNavigate();
 
   const onChangeCalendar = (e: any) => {
@@ -42,9 +45,13 @@ export const Car = (props: CarProps) => {
         <>Loading...</>
       ) : (
         <div className="mt-5">
-          <div className="grid grid-cols-2 gird-rows-2 lg:flex w-full lg:h-[300px] mb-5 bg-[#F3F1F1] rounded-lg">
+          <div className="grid grid-cols-2 gird-rows-2 lg:flex w-full lg:h-[350px] mb-5 bg-[#F3F1F1] rounded-lg">
             <div className="col-span-1 lg:w-[220px] h-full bg-primary rounded-l-lg flex relative">
-              <img alt="car" src={props.car.imagePath[0]} className="my-auto w-full" />
+              <img
+                alt="car"
+                src={props.car.imagePath[0]}
+                className="my-auto w-full"
+              />
               <FavouriteButton carId={props.car.id} />
             </div>
             <div className="col-span-1 lg:w-[240px] box-border p-3 text-sm">
@@ -84,11 +91,32 @@ export const Car = (props: CarProps) => {
             <div className="col-span-2 flex flex-col lg:w-[370px] h-full border-t-2 lg:border-t-0 lg:border-l-2 border-[#C4C4C4] box-border p-3 col-span-2 font-bold">
               <h1 className="text-xl">Detalles del precio</h1>
               <div className="flex mt-4">
-                <span>Tarifa por día</span>
+                {rentPerDay ? "Renta por dia" : "Renta por kilometros"}
+                <InputSwitch
+                  checked={rentPerDay}
+                  onChange={(e) => setRentPerDay(e.value)}
+                  className="ml-auto"
+                />
+              </div>
+              <div className="flex mt-4">
+                {rentPerDay ? "Tarifa por dia" : "Tarifa por kilometros"}
                 <span className="ml-auto text-xl">
-                  S/ {props.car.rentAmountDay}
+                  S/{" "}
+                  {rentPerDay
+                    ? props.car.rentAmountDay
+                    : props.car.rentAmountKilometer}
                 </span>
               </div>
+              {!rentPerDay && (
+                <div className="flex mt-4">
+                  Kilometros
+                  <InputNumber
+                    value={kilometers}
+                    onValueChange={(e) => setKilometers(e.value || 0)}
+                    className="ml-auto"
+                  />
+                </div>
+              )}
               <div className="flex mt-4">
                 <span>Rango de fechas</span>
                 <Calendar
@@ -104,7 +132,10 @@ export const Car = (props: CarProps) => {
               <div className="flex mt-4 pt-4 border-t-2 border-[#C4C4C4]">
                 <span>Total a pagar</span>
                 <span className="ml-auto text-xl">
-                  S/ {days * props.car.rentAmountDay}
+                  S/{" "}
+                  {rentPerDay
+                    ? days * props.car.rentAmountDay
+                    : kilometers * props.car.rentAmountKilometer}
                 </span>
               </div>
             </div>
@@ -117,7 +148,13 @@ export const Car = (props: CarProps) => {
               onClick={() =>
                 navigate(
                   "pay-rent?totalAmount=" +
-                    days * props.car.rentAmountDay +
+                    (rentPerDay
+                      ? days * props.car.rentAmountDay
+                      : kilometers * props.car.rentAmountKilometer) +
+                    "&rentPerDay=" +
+                    rentPerDay +
+                    "&kilometers=" +
+                    kilometers +
                     "&startDate=" +
                     dates[0] +
                     "&finishDate=" +
