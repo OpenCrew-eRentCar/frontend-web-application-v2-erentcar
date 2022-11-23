@@ -12,7 +12,9 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import CheckoutForm from "../../../Components/CheckoutForm";
 import FavouriteButton from "../../../Components/FavouriteButton";
 import CarEntity from "../../../Models/Car.model";
+import User from "../../../Models/User.model";
 import CarsService from "../../../Services/Cars.service";
+import ClientService from "../../../Services/Client.service";
 import PaymentsService from "../../../Services/Payments.service";
 import RentService from "../../../Services/Rent.service";
 
@@ -32,6 +34,9 @@ export const PayRent = () => {
   const [displayRentSuccessDialog, setDisplayRentSuccessDialog] =
     useState(false);
   const [clientSecret, setClientSecret] = useState<string>("");
+  const [client] = useState<User>(
+    JSON.parse(localStorage.getItem("CLIENT") || "")
+  );
   const navigate = useNavigate();
   const { carId } = useParams();
 
@@ -53,6 +58,19 @@ export const PayRent = () => {
     })
       .then((response) => {
         setDisplayRentSuccessDialog(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    if (searchParams.get("discount") !== "true") return;
+
+    await ClientService.updateClient({
+      ...client,
+      accumulatedKilometers: 0,
+    })
+      .then((response) => {
+        localStorage.setItem("CLIENT", JSON.stringify(response.data));
       })
       .catch((error) => {
         console.log(error);

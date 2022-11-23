@@ -1,10 +1,11 @@
 import { InputNumber, InputSwitch } from "primereact";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FavouriteButton from "../../../../Components/FavouriteButton";
 import CarEntity from "../../../../Models/Car.model";
+import User from "../../../../Models/User.model";
 
 const gearBoxIcon = require("../../../../Assets/gearbox.png");
 
@@ -17,7 +18,14 @@ export const Car = (props: CarProps) => {
   const [dates, setDates] = useState<Date[]>([new Date(), new Date()]);
   const [days, setDays] = useState(1);
   const [rentPerDay, setRentPerDay] = useState(true);
+  const [discount, setDiscount] = useState(false);
   const [kilometers, setKilometers] = useState<number>(1);
+  const [totalAmount, setTotalAmount] = useState<number>(
+    props.car.rentAmountDay
+  );
+  const [client] = useState<User>(
+    JSON.parse(localStorage.getItem("CLIENT") || "")
+  );
   const navigate = useNavigate();
 
   const onChangeCalendar = (e: any) => {
@@ -39,13 +47,29 @@ export const Car = (props: CarProps) => {
     }
   };
 
+  const calculateTotal = () => {
+    let total = 0;
+    if (rentPerDay) total = days * props.car.rentAmountDay;
+    else {
+      let km = kilometers;
+      if (discount) km = Math.max(1, km - client.accumulatedKilometers);
+      total = km * props.car.rentAmountKilometer;
+    }
+    setTotalAmount(total);
+  };
+
+  useEffect(() => {
+    calculateTotal();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [days, kilometers, rentPerDay, discount]);
+
   return (
     <>
       {props.loading ? (
         <>Loading...</>
       ) : (
         <div className="mt-5">
-          <div className="grid grid-cols-2 gird-rows-2 lg:flex w-full lg:h-[350px] mb-5 bg-[#F3F1F1] rounded-lg">
+          <div className="grid grid-cols-2 gird-rows-2 lg:flex w-full lg:h-[380px] mb-5 bg-[#F3F1F1] rounded-lg">
             <div className="col-span-1 lg:w-[220px] h-full bg-primary rounded-l-lg flex relative">
               <img
                 alt="car"
@@ -129,13 +153,24 @@ export const Car = (props: CarProps) => {
                   className="ml-auto"
                 />
               </div>
+              {!rentPerDay && (
+                <div className="flex mt-4">
+                  Descuento
+                  <InputSwitch
+                    checked={discount}
+                    onChange={(e) => setDiscount(e.value)}
+                    className="ml-auto"
+                  />
+                </div>
+              )}
               <div className="flex mt-4 pt-4 border-t-2 border-[#C4C4C4]">
                 <span>Total a pagar</span>
                 <span className="ml-auto text-xl">
-                  S/{" "}
-                  {rentPerDay
-                    ? days * props.car.rentAmountDay
-                    : kilometers * props.car.rentAmountKilometer}
+                  S/
+                  {" " +
+                    (!Number.isNaN(totalAmount)
+                      ? totalAmount
+                      : props.car.rentAmountDay)}
                 </span>
               </div>
             </div>
@@ -148,13 +183,15 @@ export const Car = (props: CarProps) => {
               onClick={() =>
                 navigate(
                   "pay-rent?totalAmount=" +
-                    (rentPerDay
-                      ? days * props.car.rentAmountDay
-                      : kilometers * props.car.rentAmountKilometer) +
+                    totalAmount +
                     "&rentPerDay=" +
                     rentPerDay +
+                    "&discount=" +
+                    discount +
                     "&kilometers=" +
-                    kilometers +
+                    (discount
+                      ? Math.max(1, kilometers - client.accumulatedKilometers)
+                      : kilometers) +
                     "&startDate=" +
                     dates[0] +
                     "&finishDate=" +
