@@ -17,6 +17,7 @@ export default interface CarEntity {
   mileage: number;
   rate: number;
   rentAmountDay: number;
+  rentAmountKilometer: number;
   seating: number;
   year: number;
   comments: Comment[];
