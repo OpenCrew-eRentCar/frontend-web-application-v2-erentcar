@@ -36,6 +36,7 @@ type Inputs = {
     mileage: number;
     rate: number;
     rentAmountDay: number;
+    rentAmountKilometer: number;
     seating: number;
     year: number;
     clientId: number;
@@ -55,7 +56,8 @@ const schema = yup
         mechanicCondition: yup.string().required("Ingrese la condicion del carro."),
         mileage: yup.number().min(0).max(999999999).required("Ingrese el recorrido."),
         rate: yup.number().min(0).max(999999999).required("Ingrese el rate."),
-        rentAmountDay: yup.number().min(0).max(999999999).required("Ingrese el monto de renta mensual."),
+        rentAmountDay: yup.number().min(0).max(999999999).required("Ingrese el monto de renta diaria."),
+        rentAmountKilometer: yup.number().min(0).max(999999999).required("Ingrese el monto de renta por kilometro."),
         seating: yup.number().min(0).max(999999999).required("Ingrese el numero de asientos."),
         year: yup.number().min(0).max(999999999).required("Ingrese el año."),
         //licensePlate: yup.string().required("Ingrese la licencia."),
@@ -126,6 +128,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
             "mileage": data.mileage,
             "rate": data.rate,
             "rentAmountDay": data.rentAmountDay,
+            "rentAmountKilometer": data.rentAmountKilometer,
             "seating": data.seating,
             "year": data.year,
             "clientId": data.clientId,
@@ -167,6 +170,7 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
             "mileage": data.mileage,
             "rate": data.rate,
             "rentAmountDay": data.rentAmountDay,
+            "rentAmountKilometer": data.rentAmountKilometer,
             "seating": data.seating,
             "year": data.year,
             "clientId": data.clientId,
@@ -522,7 +526,28 @@ export const RegisterCarForm = (props: RegisterFormProps) => {
                                 </small>
                             )}
                         </div>
-
+                        
+                        <div>
+                            <label htmlFor="rentAmountKilometer" className="block mt-3">
+                                Costo de Renta por kilometro
+                            </label>
+                            <InputText
+                                id="rentAmountKilometer"
+                                placeholder="Ingrese el Costo de Renta por kilometro"
+                                disabled={loading}
+                                className={errors.rentAmountKilometer && "p-invalid"}
+                                {...register("rentAmountKilometer")}
+                                type="number"
+                                min={0}
+                                max={999999999}
+                                defaultValue={!props.carData.id ? 0 : props.carData.rentAmountKilometer}
+                            />
+                            {errors.rentAmountKilometer && (
+                                <small id="rentAmountKilometer-help" className="p-error block">
+                                    {errors.rentAmountKilometer?.message}
+                                </small>
+                            )}
+                        </div>
                     </div>
 
                 </div>
