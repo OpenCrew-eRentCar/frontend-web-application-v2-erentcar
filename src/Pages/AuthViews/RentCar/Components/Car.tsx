@@ -1,6 +1,7 @@
 import { InputNumber, InputSwitch } from "primereact";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
+import { Carousel } from "primereact/carousel";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FavouriteButton from "../../../../Components/FavouriteButton";
@@ -63,6 +64,17 @@ export const Car = (props: CarProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [days, kilometers, rentPerDay, discount]);
 
+  const imageCarouselTemplate = (product: String) => {
+    return (
+      <div className="">
+        <img
+          src={`${product}`}
+          alt={`${product}`}
+        />
+      </div>
+    );
+  };
+
   return (
     <>
       {props.loading ? (
@@ -71,10 +83,13 @@ export const Car = (props: CarProps) => {
         <div className="mt-5">
           <div className="grid grid-cols-2 gird-rows-2 lg:flex w-full lg:h-[380px] mb-5 bg-[#F3F1F1] rounded-lg">
             <div className="col-span-1 lg:w-[220px] h-full bg-primary rounded-l-lg flex relative">
-              <img
-                alt="car"
-                src={props.car.imagePath[0]}
-                className="my-auto w-full"
+              <Carousel
+                value={props.car.imagePath}
+                numVisible={1}
+                numScroll={1}
+                orientation="vertical"
+                verticalViewPortHeight="150px"
+                itemTemplate={imageCarouselTemplate}
               />
               <FavouriteButton carId={props.car.id} />
             </div>
