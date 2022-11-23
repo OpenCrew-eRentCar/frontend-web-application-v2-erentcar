@@ -57,9 +57,12 @@ export const Rent = (props: RentProps) => {
       <div className="col-span-2 flex flex-col lg:w-[370px] h-full border-t-2 lg:border-t-0 lg:border-l-2 border-[#C4C4C4] box-border p-3 col-span-2 font-bold">
         <h1 className="text-xl">Detalles de la renta</h1>
         <div className="flex mt-4">
-          <span>Tarifa por día</span>
+          {props.rent.rentPerDay ? "Tarifa por día" : "Tarifa por kilometro"}
           <span className="ml-auto text-xl">
-            S/ {props.rent.car.rentAmountDay}
+            S/{" "}
+            {props.rent.rentPerDay
+              ? props.rent.car.rentAmountDay
+              : props.rent.car.rentAmountKilometer}
           </span>
         </div>
         <div className="flex mt-4">

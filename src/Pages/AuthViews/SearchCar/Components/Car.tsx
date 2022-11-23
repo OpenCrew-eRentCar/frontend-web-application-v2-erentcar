@@ -58,6 +58,10 @@ export const Car = (props: CarProps) => {
           S/ {props.car.rentAmountDay}
         </p>
         <p className="my-auto ml-2 lg:ml-0 lg:my-2">Por día</p>
+        <p className="text-xl font-bold my-auto ml-5 lg:ml-0 lg:my-0">
+          S/ {props.car.rentAmountKilometer}
+        </p>
+        <p className="my-auto ml-2 lg:ml-0 lg:my-2">Por kilometro</p>
         <Button
           label="Ver oferta"
           className="lg:w-full !ml-5 lg:!ml-0 !text-sm btn-primary"
